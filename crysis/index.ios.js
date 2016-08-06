@@ -8,7 +8,8 @@ import {
   View
 } from 'react-native';
 
-import Login from './ios/src/Components/Login'
+import Home from './ios/src/Components/Home';
+import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
 
