@@ -1,12 +1,7 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  Navigator,
   StyleSheet,
   PushNotificationIOS,
   Text,
@@ -14,7 +9,27 @@ import {
 } from 'react-native';
 
 class crysis extends Component {
+
+  handleRender(route, navigator) {
+    if (route.name === 'Login') {
+      return <Login navigator={navigator} />
+    }
+    if (route.name === 'Home') {
+      return <Home navigator={navigator} />
+    }
+    if (route.name === 'CheckIn') {
+      return <CheckIn navigator={navigator} />
+    }
+    if (route.name === 'Attendance') {
+      return <Attendance navigator={navigator} />
+    }
+    if (route.name === 'Help') {
+      return <Help navigator={navigator} />
+    }
+  }
+
   render() {
+    Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
     PushNotificationIOS.requestPermissions();
     PushNotificationIOS.addEventListener('register', function(token){
   console.log('You are registered and the device token is: ', token);
@@ -22,16 +37,11 @@ class crysis extends Component {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <Navigator
+          initialRoute={{name: 'Login'}}
+          renderScene={this.handleRender.bind(this)}
+          configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
+        />
       </View>
     );
   }
@@ -41,18 +51,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+    backgroundColor: '#BFDBF3',
   },
 });
 
