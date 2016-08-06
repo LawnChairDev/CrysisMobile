@@ -8,12 +8,18 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
+  PushNotificationIOS,
   Text,
   View
 } from 'react-native';
 
 class crysis extends Component {
   render() {
+    PushNotificationIOS.requestPermissions();
+    PushNotificationIOS.addEventListener('register', function(token){
+  console.log('You are registered and the device token is: ', token);
+    });
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>

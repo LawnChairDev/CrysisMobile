@@ -7,6 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
+#import "RCTPushNotificationManager.h"
 #import "AppDelegate.h"
 
 #import "RCTBundleURLProvider.h"
@@ -33,5 +34,36 @@
   [self.window makeKeyAndVisible];
   return YES;
 }
+
+-(void)application:(UIApplication *)application
+didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+  {
+    [RCTPushNotificationManager
+    didRegisterUserNotificationSettings:notificationSettings];
+  }
+
+-(void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+  {
+    [RCTPushNotificationManager
+    didRegisterForRemoteNotificationsWithDeviceToken: deviceToken];
+  }
+
+-(void)application:(UIApplication *)application
+didReceiveRemoteNotification:(NSDictionary *)notification
+  {
+    [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+  }
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+  {
+    [RCTPushNotificationManager didReceiveLocalNotification:notification];
+  }
+
+-(void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+  {
+    NSLog(@"%@", error);
+  }
 
 @end
