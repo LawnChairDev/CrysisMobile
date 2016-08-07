@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 
 import Home from './ios/src/Components/Home';
+import CheckIn from './ios/src/Components/CheckIn';
+import Attendance from './ios/src/Components/Attendance';
+import Help from './ios/src/Components/Help';
 import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
