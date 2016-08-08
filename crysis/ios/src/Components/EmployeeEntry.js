@@ -6,8 +6,14 @@ import {
 } from 'react-native';
 
 const EmployeeEntry = (props) => {
+	var entryStyle;
+		if (props.status === true) {
+			entryStyle = styles.entrySafe
+		} else {
+			entryStyle = styles.entryHelp
+		}
 	return (
-		<View style={styles.entry}>
+		<View style={entryStyle}>
 			<Text style={styles.text}>Name: { props.name }</Text>
 			<Text style={styles.text}>Warden: { props.wardenName }</Text>
 		</View>
@@ -15,16 +21,29 @@ const EmployeeEntry = (props) => {
 }
 
 const styles = StyleSheet.create({
-	entry: {
+	entryDefault: {
 		margin: 5,
-		padding: 12,
-		borderWidth: 1,
+		padding: 6,
 		borderRadius: 7,
 		backgroundColor: 'gray'
 	},
+	entrySafe: {
+		margin: 5,
+		padding: 6,
+		borderRadius: 7,
+		backgroundColor: '#3ED715'
+	},
+	entryHelp: {
+		margin: 5,
+		padding: 6,
+		borderRadius: 7,
+		backgroundColor: '#FE3C3C'
+	},
 	text: {
-		color: '#BFDBF3',
-		fontWeight: 'bold'
+		color: '#fff',
+		fontSize: 17,
+		fontWeight: 'bold',
+		padding: 6
 	}
 })
 
