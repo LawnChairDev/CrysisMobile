@@ -82,12 +82,12 @@ const styles = StyleSheet.create({
 		height: 30,
 		width: 60,
 		margin: 25,
-		backgroundColor: '#3ED715'
+		backgroundColor: '#1396C2'
 	},
 	buttonText: {
-		fontSize: 15,
-		padding: 10,
-		borderRadius: 8
+		fontWeight: 'bold',
+		padding: 5,
+		color: '#fff'
 	 }
 });
 
