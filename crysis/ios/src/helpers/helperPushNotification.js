@@ -14,5 +14,4 @@ export function registerPush(){
 export function attachDeviceToken(loginObj){
   var userToken = getFromStorage('deviceToken');
   loginObj.userToken = userToken;
-  })
-}
+  }

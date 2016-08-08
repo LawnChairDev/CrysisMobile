@@ -8,7 +8,7 @@ import {
   Text,
   View
 } from 'react-native';
-import { registerPush } from './ios/src/helpers/helpersPushNotifications'
+import { registerPush } from './ios/src/helpers/helperPushNotification'
 
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
@@ -34,13 +34,15 @@ class crysis extends Component {
     if (route.name === 'Help') {
       return <Help navigator={navigator} />
     }
+  }
+
   componentWillMount() {
     registerPush();
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
   }
 
   render() {
-
+    Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
     return (
       <View style={styles.container}>
         <Navigator
