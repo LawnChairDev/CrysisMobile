@@ -5,39 +5,20 @@ import {
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
+import { sendUserStatus } from '../helpers/helperAPI';
 
 class CheckIn extends Component {
 	navigateSafe(routeName) {
-		let that = this;
 			// the user id will have to be changed to match the current user
-		fetch('http://localhost:3000/api/user/?id=2&column=status', {
-			method: 'put',
-				headers: {
-					'Accept': 'application/json',
-				  'Content-Type': 'application/json',
-				},
-			body: JSON.stringify({
-					status: 'true'
-			})
-		})
+		sendUserStatus('true');
 		console.log("I'm safe");
 		this.props.navigator.push({
 			name: routeName
 		})
 	}
 	navigateHelp(routeName) {
-		let that = this;
+		sendUserStatus('false');
 			// the user id will have to be changed to match the current user
-		fetch('http://localhost:3000/api/user/?id=2&column=status', {
-			method: 'put',
-				headers: {
-					'Accept': 'application/json',
-				  'Content-Type': 'application/json',
-				},
-			body: JSON.stringify({
-					status: 'false'
-			})
-		})
 		console.log("HELP!");
 		this.props.navigator.push({
 			name: routeName

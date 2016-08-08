@@ -1,6 +1,7 @@
 import { getFromStorage } from './helperLocalStorage';
 
-var rootUrl = 'http://192.168.1.76:3000';
+//var rootUrl = 'http://192.168.1.76:3000';
+var rootUrl = 'http://localhost:3000';
 
 var jwt;
 
@@ -8,29 +9,41 @@ export function attachJwtToHeaders(){
   jwt = getFromStorage('jwtToken');
 }
 
-export function submitEmergencyAlert(){
+export function sendEmergencyAlert(){
   console.log('running emergencyAlertCall');
-  // ====  NEED TO SETUP ROUTE === //
-  var url = buildUrl(rootUrl, '/api/emergencyAlert')
+  var url = buildUrl(rootUrl, '/api/user', {
+    'column': 'OrganizationId',
+    'value': '1' //THIS NEEDS TO BE CHANGED TO THE JWT
+  })
   var config = {
-    method: "POST",
+    method: "PUT",
     headers: {
-      "x-access-token": jwt
-    }
+      "x-access-token": jwt,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      emergencyStatus: 'true'
+    })
   }
   console.log(url, "url", config, "config");
   //return fetch(url, config);
 }
 
-export function submitUserStatus(){
+export function sendUserStatus(userStatus){
   console.log('running userStatusCall');
   // === NEED TO SETUP ROUTE === //
-  var url = buildUrl(rootUrl, '/api/userStatus')
+  var url = buildUrl(rootUrl, '/api/user/?id=2&column=status')
   var config = {
-    method: "POST",
+    method: "PUT",
     headers: {
-      "x-access-token": jwt
-    }
+      "x-access-token": jwt,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        status: userStatus
+    })
   }
   // return fetch(url, config);
 }
@@ -38,17 +51,17 @@ export function submitUserStatus(){
 export function getStatusList(){
   console.log('running getStatusList');
   // === NEED TO SETUP ROUTE === //
-  var url = buildUrl(rootUrl, '/api/statusList');
+  var url = buildUrl(rootUrl, '/api/user');
   var config = {
     method: "GET",
     headers: {
       "x-access-token": jwt
     }
   }
-  // return fetch(url, config);
+  return fetch(url, config);
 }
 
-export function submitLoginCredentials(loginObj){
+export function sendLoginCredentials(loginObj){
   console.log('running submitLoginCredentials');
   //  === NEED TO SETUP ROUTE === //
   var url = buildUrl(rootUrl, '/api/login');

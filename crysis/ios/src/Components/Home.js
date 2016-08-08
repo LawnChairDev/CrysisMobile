@@ -5,28 +5,15 @@ import {
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
+import { submitEmergencyAlert } from '../helpers/helperAPI';
 
 class Home extends Component {
-
-	triggerCrisis() {
-		let that = this;
-			fetch('http://localhost:3000/api/Organization?id=1&column=emergencyStatus', {
-		  	method: 'put',
-			  	headers: {
-				    'Accept': 'application/json',
-				    'Content-Type': 'application/json',
-			  	},
-			  body: JSON.stringify({
-			    emergencyStatus: 'true'
-			  })
-			})
-	}
 
 	navigate(routeName) {
 		this.props.navigator.push({
 			name: routeName
 		})
-		this.triggerCrisis();
+		sendEmergencyAlert();
 	}
 
 	render() {
