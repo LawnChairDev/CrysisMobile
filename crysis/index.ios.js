@@ -4,9 +4,11 @@ import {
   Navigator,
   StyleSheet,
   PushNotificationIOS,
+  AlertIOS,
   Text,
   View
 } from 'react-native';
+import { registerPush } from './ios/src/helpers/helpersPushNotifications'
 
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
@@ -32,14 +34,12 @@ class crysis extends Component {
     if (route.name === 'Help') {
       return <Help navigator={navigator} />
     }
+  componentWillMount() {
+    registerPush();
+    PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
   }
 
   render() {
-    Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
-    PushNotificationIOS.requestPermissions();
-    PushNotificationIOS.addEventListener('register', function(token){
-  console.log('You are registered and the device token is: ', token);
-    });
 
     return (
       <View style={styles.container}>
@@ -50,6 +50,21 @@ class crysis extends Component {
         />
       </View>
     );
+  }
+
+  onNotification(notification) {
+    if(notification.getData().silent){
+      //FILL IN WITH UPDATE TO VIEW ON EMPLOYEE LIST
+      return;
+    }
+    AlertIOS.alert(
+      "Push Notification Received",
+      "Alert message: " + notification.getMessage(),
+      [{
+        text: "Dismiss",
+        onPress: null
+      }]
+    )
   }
 }
 
