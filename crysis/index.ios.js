@@ -8,16 +8,17 @@ import {
   Text,
   View
 } from 'react-native';
+
 import { registerPush } from './ios/src/helpers/helperPushNotification'
+import { getFromStorage } from './ios/src/helpers/helperLocalStorage'
 
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
 import Attendance from './ios/src/Components/Attendance';
-import Help from './ios/src/Components/Help';
 import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
-
+  
   handleRender(route, navigator) {
     if (route.name === 'Login') {
       return <Login navigator={navigator} />
@@ -31,10 +32,7 @@ class crysis extends Component {
     if (route.name === 'Attendance') {
       return <Attendance navigator={navigator} />
     }
-    if (route.name === 'Help') {
-      return <Help navigator={navigator} />
-    }
-  }
+  } 
 
   componentWillMount() {
     registerPush();
@@ -43,15 +41,31 @@ class crysis extends Component {
 
   render() {
     Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
-    return (
-      <View style={styles.container}>
-        <Navigator
-          initialRoute={{name: 'Login'}}
-          renderScene={this.handleRender.bind(this)}
-          configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
-        />
-      </View>
-    );
+
+    if (getFromStorage('deviceToken')) {
+
+      return (
+        <View style={styles.container}>
+          <Navigator
+            initialRoute={{name: 'Home'}}
+            renderScene={this.handleRender.bind(this)}
+            configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
+          />
+        </View>
+      );
+
+    } else {
+
+      return (
+        <View style={styles.container}>
+          <Navigator
+            initialRoute={{name: 'Login'}}
+            renderScene={this.handleRender.bind(this)}
+            configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
+          />
+        </View>
+      );
+    }
   }
 
   onNotification(notification) {
