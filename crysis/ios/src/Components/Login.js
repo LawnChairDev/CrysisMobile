@@ -6,6 +6,7 @@ import {
 	TouchableHighlight,
   TextInput
 } from 'react-native';
+import { sendLoginCredentials } from '../helpers/helperAPI';
 
 class Login extends Component {
   constructor(props) {
@@ -19,6 +20,19 @@ class Login extends Component {
 		this.props.navigator.push({
 			name: routeName
 		});
+	}
+
+	onSubmitLoginCredentials(){
+		// sendLoginCredentials({
+		// 	username: this.state.usernameTextbox,
+		// 	password: this.state.passwordTextbox
+		// }).then(function(response){
+		// this.navigate('Home');
+		// })
+		// .catch(function(err){
+		// 	console.log(err)
+		// })
+		this.navigate('Home');
 	}
 
 	render() {
@@ -41,7 +55,7 @@ class Login extends Component {
             value={this.state.passwordTextbox}
           />
       		<TouchableHighlight
-      			onPress={ this.navigate.bind(this, 'Home') }
+      			onPress={ this.onSubmitLoginCredentials.bind(this) }
       			style={styles.button}>
         			<Text style={styles.buttonText}>Login</Text>
       		</TouchableHighlight>

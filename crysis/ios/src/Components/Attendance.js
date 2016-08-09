@@ -6,6 +6,7 @@ import {
 	TouchableHighlight,
 	ScrollView
 } from 'react-native';
+import { getStatusList } from '../helpers/helperAPI'
 import _ from 'lodash'
 
 import EmployeeEntry from './EmployeeEntry';
@@ -19,11 +20,9 @@ class Attendance extends Component {
 	}
 
 	componentDidMount() {
-		let that = this;
-		fetch('http://localhost:3000/api/user', {
-			method: 'get'
-		}).then(function(response) {
-			that.setState({userData: JSON.parse(response._bodyInit)})
+		let self = this;
+		getStatusList().then(function(response) {
+			self.setState({userData: JSON.parse(response._bodyInit)})
 			console.log('Data Recieved - ', JSON.parse(response._bodyInit));
 		}).catch(function(err) {
 			console.log('Error Recieving Data - ', err);
