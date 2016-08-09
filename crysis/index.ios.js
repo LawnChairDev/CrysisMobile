@@ -15,7 +15,6 @@ import { getFromStorage } from './ios/src/helpers/helperLocalStorage'
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
 import Attendance from './ios/src/Components/Attendance';
-import Help from './ios/src/Components/Help';
 import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
@@ -32,9 +31,6 @@ class crysis extends Component {
     }
     if (route.name === 'Attendance') {
       return <Attendance navigator={navigator} />
-    }
-    if (route.name === 'Help') {
-      return <Help navigator={navigator} />
     }
   } 
 
