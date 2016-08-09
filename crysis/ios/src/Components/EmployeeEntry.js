@@ -7,7 +7,7 @@ import {
 
 const EmployeeEntry = (props) => {
 	var entryStyle;
-		if (props.status === true) {
+		if (props.status === 'true') {
 			entryStyle = styles.entrySafe
 		} else {
 			entryStyle = styles.entryHelp
