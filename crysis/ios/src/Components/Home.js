@@ -5,7 +5,7 @@ import {
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
-import { submitEmergencyAlert } from '../helpers/helperAPI';
+import { sendEmergencyAlert } from '../helpers/helperAPI';
 
 class Home extends Component {
 
