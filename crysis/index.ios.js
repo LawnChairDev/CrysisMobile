@@ -18,6 +18,14 @@ import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
 
+  constructor(props){
+    super(props)
+
+    this.state = {
+      isAuthenticated: true
+    }
+  }
+
   handleRender(route, navigator) {
     if (route.name === 'Login') {
       return <Login navigator={navigator} />
@@ -37,7 +45,9 @@ class crysis extends Component {
   }
 
   componentWillMount() {
-    registerPush();
+    registerPush(this).then(function(){
+      console.log("device token was sent to the server");
+    })
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
   }
 
