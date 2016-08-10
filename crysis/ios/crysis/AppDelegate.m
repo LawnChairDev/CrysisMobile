@@ -19,7 +19,16 @@
 {
   NSURL *jsCodeLocation;
 
+
+
+  [[RCTBundleURLProvider sharedSettings] setJsLocation:@"192.168.1.56"];
+
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+
+  // [[RCTBundleURLProvider sharedSettings] setJsLocation:nil];
+  // jsCodeLocation = [[RCTBundleURLProvider sharedSettings] setJsLocation:nil];
+
+
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"crysis"
