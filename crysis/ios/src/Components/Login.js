@@ -23,16 +23,19 @@ class Login extends Component {
 	}
 
 	onSubmitLoginCredentials(){
-		// sendLoginCredentials({
-		// 	username: this.state.usernameTextbox,
-		// 	password: this.state.passwordTextbox
-		// }).then(function(response){
-		// this.navigate('Home');
-		// })
-		// .catch(function(err){
-		// 	console.log(err)
-		// })
+		sendLoginCredentials({
+			username: this.state.usernameTextbox,
+			password: this.state.passwordTextbox
+		}).then(function(response){
+			response.json().then(function(data){
+				console.log(data);
+			})
 		this.navigate('Home');
+		})
+		.catch(function(err){
+			console.log(err)
+		})
+		//this.navigate('Home');
 	}
 
 	render() {

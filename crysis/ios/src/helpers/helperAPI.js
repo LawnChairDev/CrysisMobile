@@ -70,9 +70,9 @@ export function sendLoginCredentials(loginObj){
     headers: {
       "content-type": "application/json"
     },
-    body: loginObj
+    body: JSON.stringify(loginObj)
   }
-  // return fetch(url, config);
+  return fetch(url, config);
 }
 
 
