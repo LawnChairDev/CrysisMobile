@@ -5,9 +5,12 @@ import {
   StyleSheet,
 	TouchableHighlight,
   ScrollView,
+  Image,
   TextInput
 } from 'react-native';
+
 import { sendLoginCredentials } from '../helpers/helperAPI';
+import wallpaper from '../wallpaper.png';
 
 class Login extends Component {
   constructor(props) {
@@ -17,13 +20,14 @@ class Login extends Component {
       passwordTextbox: ''
     }
   }
-	navigate(routeName) {
+
+	navigate() {
 		this.props.navigator.push({
-			name: routeName
+			name: 'Home'
 		});
 	}
 
-	onSubmitLoginCredentials(){
+	onSubmitLoginCredentials() {
 		// sendLoginCredentials({
 		// 	username: this.state.usernameTextbox,
 		// 	password: this.state.passwordTextbox
@@ -31,20 +35,21 @@ class Login extends Component {
 		// this.navigate('Home');
 		// })
 		// .catch(function(err){
-		// 	console.log(err)
-		// })
-		this.navigate('Home');
-	}
+    //  console.log(err)
+    // })
+    this.navigate('Home');
+  }
 
-	render() {
-		return (
-			<View style={styles.container}>
-          <ScrollView
-            style={styles.scrollView}
-            scrollEnabled={false}
-            keyboardShouldPersistTaps={false}
-          >
-				    <Text style={styles.title}>Crysis</Text>
+  render() {
+    return (
+      <Image style={styles.container} source={wallpaper}>
+        <ScrollView
+          style={styles.scrollView}
+          keyboardShouldPersistTaps={false}
+          scrollEnabled={false}
+        >
+          <View style={styles.modal}>
+            <Text style={styles.title}>Crysis</Text>
             <TextInput
               style={styles.textBoxes}
               onChangeText={(usernameTextbox) => this.setState({usernameTextbox})}
@@ -57,18 +62,20 @@ class Login extends Component {
               onChangeText={(passwordTextbox) => this.setState({passwordTextbox})}
               placeholder={'Password'}
               secureTextEntry={true}
-              onSubmitEditing={this.navigate.bind(this, 'Home')}
+              onSubmitEditing={this.navigate}
               value={this.state.passwordTextbox}
             />
-      		<TouchableHighlight
-      			onPress={ this.onSubmitLoginCredentials.bind(this) }
-      			style={styles.button}>
-        			<Text style={styles.buttonText}>Login</Text>
-      		</TouchableHighlight>
-          </ScrollView>
-			</View>
-		)
-	}
+            <TouchableHighlight
+              onPress={ this.onSubmitLoginCredentials.bind(this) }
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableHighlight>
+          </View>
+        </ScrollView>
+      </Image>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -76,38 +83,54 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#BFDBF3'
+    backgroundColor: '#BFDBF3',
+    width: null,
+    height: null
   },
   button: {
-    height: 50,
-    backgroundColor: '#CE0536',
-    alignSelf: 'stretch',
     alignItems: 'center',
-    marginTop: 5,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    height: 40,
+    margin: 5,
+    backgroundColor: '#6C1111',
   },
   buttonText: {
-    fontSize: 22,
+    alignSelf: 'center',
     color: '#FFF',
-    alignSelf: 'center'
+    fontSize: 22,
+    fontFamily: 'courier',
   },
   title: {
-    fontSize: 50,
     alignSelf: 'center',
-    marginBottom: 15
+    marginBottom: 15,
+    fontSize: 50,
+    fontFamily: 'courier',
   },
   scrollView: {
     flex: 1,
-    padding: 30,
-    marginTop: 180,
-    alignSelf: 'stretch'
+    alignSelf: 'stretch',
+    padding: 30
+  },
+  modal: {
+    marginTop: 200,
+    backgroundColor: "#FDFDF1",
+    borderRadius: 5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
   },
   textBoxes: {
     height: 40,
     margin: 5,
     padding: 10,
     borderColor: 'gray',
-    borderWidth: 1
+    fontFamily: 'courier',
+    borderWidth: 2,
+    borderColor: '#6C1111'
   }
 });
 
