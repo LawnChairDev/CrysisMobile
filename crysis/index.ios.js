@@ -18,7 +18,15 @@ import Attendance from './ios/src/Components/Attendance';
 import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
-  
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      isAuthenticated: true
+    }
+  }
+
   handleRender(route, navigator) {
     if (route.name === 'Login') {
       return <Login navigator={navigator} />
@@ -32,11 +40,12 @@ class crysis extends Component {
     if (route.name === 'Attendance') {
       return <Attendance navigator={navigator} />
     }
-  } 
+  }
 
   componentWillMount() {
-    registerPush();
+    registerPush()
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
+    console.log('this comp started up')
   }
 
   render() {

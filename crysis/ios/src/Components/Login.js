@@ -27,18 +27,21 @@ class Login extends Component {
 		});
 	}
 
-	onSubmitLoginCredentials() {
-		// sendLoginCredentials({
-		// 	username: this.state.usernameTextbox,
-		// 	password: this.state.passwordTextbox
-		// }).then(function(response){
-		// this.navigate('Home');
-		// })
-		// .catch(function(err){
-    //  console.log(err)
-    // })
-    this.navigate('Home');
-  }
+onSubmitLoginCredentials(){
+	console.log('inside this function');
+	var self = this;
+	sendLoginCredentials({
+		username: this.state.usernameTextbox,
+		password: this.state.passwordTextbox
+	})
+	.then(function(){
+		console.log('finished');
+		self.navigate('Home');
+	})
+	.catch(function(error){
+		console.log(error);
+	})
+}
 
   render() {
     return (
@@ -62,7 +65,7 @@ class Login extends Component {
               onChangeText={(passwordTextbox) => this.setState({passwordTextbox})}
               placeholder={'Password'}
               secureTextEntry={true}
-              onSubmitEditing={this.navigate}
+              //onSubmitEditing={this.navigate}
               value={this.state.passwordTextbox}
             />
             <TouchableHighlight
