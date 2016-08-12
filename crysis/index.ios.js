@@ -9,8 +9,8 @@ import {
   View
 } from 'react-native';
 
-import { registerPush } from './ios/src/helpers/helperPushNotification'
-import { getFromStorage } from './ios/src/helpers/helperLocalStorage'
+import { registerPush } from './ios/src/helpers/helperPushNotification';
+import { getFromStorage } from './ios/src/helpers/helperLocalStorage';
 
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
@@ -18,10 +18,8 @@ import Attendance from './ios/src/Components/Attendance';
 import Login from './ios/src/Components/Login';
 
 class crysis extends Component {
-
   constructor(props){
     super(props)
-
     this.state = {
       isAuthenticated: true
     }
@@ -52,7 +50,6 @@ class crysis extends Component {
     Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
 
     if (getFromStorage('deviceToken')) {
-
       return (
         <View style={styles.container}>
           <Navigator
@@ -61,10 +58,8 @@ class crysis extends Component {
             configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
           />
         </View>
-      );
-
+      )
     } else {
-
       return (
         <View style={styles.container}>
           <Navigator
@@ -73,7 +68,7 @@ class crysis extends Component {
             configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
           />
         </View>
-      );
+      )
     }
   }
 
@@ -97,8 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    backgroundColor: '#BFDBF3',
-  },
+  }
 });
 
 AppRegistry.registerComponent('crysis', () => crysis);
