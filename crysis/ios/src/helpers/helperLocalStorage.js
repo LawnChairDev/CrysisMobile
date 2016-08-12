@@ -8,9 +8,3 @@ export function getFromStorage(itemName){
     return result;
   })
 }
-
-export function setToStorage(itemName, item){
-  AsyncStorage.setItem(itemName, item, ( ) => {
-    console.log('AsynceStorage setItem was called');
-  })
-}
