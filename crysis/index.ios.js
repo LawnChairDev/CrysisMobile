@@ -45,10 +45,9 @@ class crysis extends Component {
   }
 
   componentWillMount() {
-    registerPush(this).then(function(){
-      console.log("device token was sent to the server");
-    })
+    registerPush()
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
+    console.log('this comp started up')
   }
 
   render() {

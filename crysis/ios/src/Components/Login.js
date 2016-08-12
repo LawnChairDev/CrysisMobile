@@ -23,13 +23,14 @@ class Login extends Component {
 	}
 
 	onSubmitLoginCredentials(){
+		console.log('inside this function');
 		var self = this;
 		sendLoginCredentials({
 			username: this.state.usernameTextbox,
 			password: this.state.passwordTextbox
 		})
-		.then(function(stuff){
-    	console.log(stuff, 'finished');
+		.then(function(){
+    	console.log('finished');
 			self.navigate('Home');
     })
 		.catch(function(error){
@@ -53,7 +54,7 @@ class Login extends Component {
             onChangeText={(passwordTextbox) => this.setState({passwordTextbox})}
             placeholder={'Password'}
             secureTextEntry={true}
-            onSubmitEditing={this.navigate.bind(this, 'Home')}
+            //onSubmitEditing={this.navigate.bind(this, 'Home')}
             value={this.state.passwordTextbox}
           />
       		<TouchableHighlight

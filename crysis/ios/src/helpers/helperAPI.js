@@ -1,30 +1,35 @@
-import { getFromStorage, setToStorage } from './helperLocalStorage';
 import { AsyncStorage } from 'react-native';
+import { attachDeviceToken } from './helperPushNotification';
 
 var rootUrl = 'http://192.168.1.56:3000';
 // var rootUrl = 'http://localhost:3000';
 
 var jwt;
+AsyncStorage.getItem('jwtToken')
+  .then(function(data){
+    jwt = data;
+    console.log('your jwt was successfully loaded into memory');
+  })
+  .catch(function(){
+    console.log('unable to retreive jwt from storage');
+  })
 
 export function sendEmergencyAlert(){
   console.log('running emergencyAlertCall');
-  var url = buildUrl(rootUrl, '/api/user', {
-    'column': 'OrganizationId',
-    'value': '1' //THIS NEEDS TO BE CHANGED TO THE JWT
-  })
+  var url = buildUrl(rootUrl, '/api/alert')
   var config = {
     method: "PUT",
     headers: {
       "x-access-token": jwt,
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      // 'Accept': 'application/json',
+      // 'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      emergencyStatus: 'true'
-    })
+    // body: JSON.stringify({
+    //   emergencyStatus: 'true'
+    // })
   }
   console.log(url, "url", config, "config");
-  //return fetch(url, config);
+  return fetch(url, config);
 }
 
 export function sendUserStatus(userStatus){
@@ -76,28 +81,31 @@ export function sendDeviceToken(deviceToken){
 
 export function sendLoginCredentials(loginObj){
   console.log('running submitLoginCredentials');
-  var url = buildUrl(rootUrl, '/api/login');
-  var config = {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(loginObj)
-  }
-  return fetch(url, config)
-    .then(function(response){
-      return response.json()
-    .then(function(data){
-      console.log('attached jwt to api calls')
-      jwt = data.token;
-      return data.token;
-    })
-    .then(function(data){
-      return AsyncStorage.setItem('jwtToken', data)
-        .then(function(){
-          return 'jwt set into storage'
-      })
-    })
+  var copiedObj = Object.assign({}, loginObj);
+  console.log(copiedObj);
+  return AsyncStorage.getItem('deviceToken')
+  .then(function(dvcToken){
+    console.log(dvcToken, "device token retreived from storage");
+    loginObj.deviceToken = dvcToken;
+    var url = buildUrl(rootUrl, '/api/login');
+    var config = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(loginObj)
+    }
+
+    return fetch(url, config)
+  })
+  .then(function(response){
+    return response.json()
+  })
+  .then(function(data){
+    console.log('attached jwt to api calls')
+    console.log(data, 'data returned from server on login')
+    jwt = data.token;
+    return AsyncStorage.setItem('jwtToken', data.token)
   })
 }
 
