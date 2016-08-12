@@ -2,47 +2,53 @@ import React, { Component } from 'react';
 import {
 	View,
 	Text,
+	Image,
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
+
 import { sendUserStatus } from '../helpers/helperAPI';
+import red from '../red.png';
 
 class CheckIn extends Component {
-	navigateSafe(routeName) {
+	constructor(props) {
+		super(props)
+	}
+
+	navigateSafe() {
 			// the user id will have to be changed to match the current user
 		sendUserStatus('true');
 		console.log("I'm safe");
 		this.props.navigator.push({
-			name: routeName
+			name: 'Attendance'
 		})
 	}
-	navigateHelp(routeName) {
+	
+	navigateHelp() {
 		sendUserStatus('false');
 			// the user id will have to be changed to match the current user
 		console.log("HELP!");
 		this.props.navigator.push({
-			name: routeName
+			name: 'Attendance'
 		})
 	}
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<Image style={styles.container} source={red}>
 
 				<TouchableHighlight
-					onPress={this.navigateSafe.bind(this, 'Attendance')}
+					onPress={this.navigateSafe.bind(this)}
 					style={styles.safe}>
-					<Text
-						style={styles.text}>SAFE</Text>
+					<Text style={styles.text}>SAFE</Text>
 				</TouchableHighlight>
 
 				<TouchableHighlight
-					onPress={this.navigateHelp.bind(this, 'Attendance')}
+					onPress={this.navigateHelp.bind(this)}
 					style={styles.help}>
-						<Text style={styles.text}>HELP</Text>
+					<Text style={styles.text}>HELP</Text>
 				</TouchableHighlight>
-
-			</View>
+			</Image>
 		)
 	}
 }
@@ -51,30 +57,46 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		justifyContent: 'center',
-    	alignItems: 'center',
-		flexDirection: 'row'
+    alignItems: 'center',
+		flexDirection: 'row',
+    width: null,
+    height: null
 	},
 	help: {
 		width: 100,
 		height: 100,
 		marginLeft: 20,
-		borderRadius: 10,
 		backgroundColor: '#FE3C3C',
+    borderRadius: 5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
   },
   safe: {
   	width: 100,
 		height: 100,
 		marginRight: 20,
-		borderRadius: 10,
-	  backgroundColor: '#3ED715'
+	  backgroundColor: '#3ED715',
+    borderRadius: 5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
   },
   text: {
-		flex: 1,
     color: '#fff',
     fontSize: 30,
+    fontFamily: 'courier',
     fontWeight: 'bold',
 		alignSelf: 'center',
-		marginTop: 30
+		paddingTop: 35,
   }
 })
 

@@ -6,10 +6,10 @@ import {
 	TouchableHighlight,
 	ScrollView
 } from 'react-native';
-import { getStatusList } from '../helpers/helperAPI'
-import _ from 'lodash'
 
+import { getStatusList } from '../helpers/helperAPI'
 import EmployeeEntry from './EmployeeEntry';
+import _ from 'lodash'
 
 class Attendance extends Component {
 	constructor(props) {

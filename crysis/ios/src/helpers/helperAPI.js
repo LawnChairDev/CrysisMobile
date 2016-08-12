@@ -1,8 +1,8 @@
 import { AsyncStorage } from 'react-native';
 import { attachDeviceToken } from './helperPushNotification';
 
-var rootUrl = 'http://192.168.1.56:3000';
-// var rootUrl = 'http://localhost:3000';
+// var rootUrl = 'http://192.168.1.56:3000';
+var rootUrl = 'http://localhost:3000';
 
 var jwt;
 AsyncStorage.getItem('jwtToken')
@@ -87,7 +87,7 @@ export function sendLoginCredentials(loginObj){
   .then(function(dvcToken){
     console.log(dvcToken, "device token retreived from storage");
     loginObj.deviceToken = dvcToken;
-    var url = buildUrl(rootUrl, '/api/login');
+    var url = buildUrl(rootUrl, '/api/mobileLogin');
     var config = {
       method: "POST",
       headers: {

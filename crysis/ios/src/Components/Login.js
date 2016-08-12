@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { sendLoginCredentials } from '../helpers/helperAPI';
-import wallpaper from '../wallpaper.png';
+import red from '../red.png';
 
 class Login extends Component {
   constructor(props) {
@@ -28,24 +28,23 @@ class Login extends Component {
 	}
 
 onSubmitLoginCredentials(){
-	console.log('inside this function');
-	var self = this;
+	var that = this;
 	sendLoginCredentials({
 		username: this.state.usernameTextbox,
 		password: this.state.passwordTextbox
 	})
 	.then(function(){
-		console.log('finished');
-		self.navigate('Home');
+		console.log('Credentials Approved');
+		that.navigate();
 	})
 	.catch(function(error){
-		console.log(error);
+		console.log('Error Approving Credentials - ', error);
 	})
 }
 
   render() {
     return (
-      <Image style={styles.container} source={wallpaper}>
+      <Image style={styles.container} source={red}>
         <ScrollView
           style={styles.scrollView}
           keyboardShouldPersistTaps={false}
@@ -55,6 +54,8 @@ onSubmitLoginCredentials(){
             <Text style={styles.title}>Crysis</Text>
             <TextInput
               style={styles.textBoxes}
+              autoCapitalize={'none'}
+              autoCorrect={false}
               onChangeText={(usernameTextbox) => this.setState({usernameTextbox})}
               returnKeyType={'next'}
               placeholder={'Username'}
@@ -63,6 +64,8 @@ onSubmitLoginCredentials(){
             <TextInput
               style={styles.textBoxes}
               onChangeText={(passwordTextbox) => this.setState({passwordTextbox})}
+              autoCapitalize={'none'}
+              autoCorrect={false}
               placeholder={'Password'}
               secureTextEntry={true}
               //onSubmitEditing={this.navigate}
@@ -86,7 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#BFDBF3',
     width: null,
     height: null
   },
@@ -130,7 +132,6 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 5,
     padding: 10,
-    borderColor: 'gray',
     fontFamily: 'courier',
     borderWidth: 2,
     borderColor: '#6C1111'

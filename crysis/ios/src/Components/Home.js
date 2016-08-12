@@ -2,65 +2,91 @@ import React, { Component } from 'react';
 import {
 	View,
 	Text,
+	Image,
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
+
 import { sendEmergencyAlert } from '../helpers/helperAPI';
+import green from '../green.png';
 
 class Home extends Component {
+	constructor(props) {
+		super(props)
+	}	
 
-	navigate(routeName) {
+	navigate() {
 		this.props.navigator.push({
-			name: routeName
+			name: 'CheckIn'
 		})
 		sendEmergencyAlert();
 	}
 
 	render() {
-
 		return (
-			<View>
-		    <TouchableHighlight
-		    	delayLongPress={4500}
-		    	onLongPress={this.navigate.bind(this, 'CheckIn')}
-		    	style={styles.button}
-		    >
-				<View>
-  					<Text style={styles.buttonText}>Crysis</Text>
-				</View>
+			<Image style={styles.container} source={green}>
+			    <TouchableHighlight
+			    	delayLongPress={4500}
+			    	onLongPress={this.navigate.bind(this)}
+			    	style={styles.button}
+			    >
+					<View>
+	  					<Text style={styles.buttonText}>Crysis</Text>
+					</View>
 			</TouchableHighlight>
 					<View>
   					<Text style={styles.counter}>Hold For 5 Seconds</Text>
   				</View>
-  		</View>
+  		</Image>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
+	container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: null,
+    height: null
+  },
 	button: {
-		marginTop: 250,
-		justifyContent: 'center',
-		alignSelf: 'center',
-		height: 150,
-		width: 300,
-		borderRadius: 3,
-		backgroundColor: '#F5FCFF',
+		height: 160,
+		width: 320,
+		backgroundColor: "#6C1111",
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
 	},
   buttonText: {
-  	fontSize: 85,
-  	paddingTop: 25,
-  	paddingBottom: 25,
-		borderRadius: 3,
-		fontWeight: 'bold',
+  	justifyContent: 'center',
+  	fontSize: 80,
 		textAlign: 'center',
-		backgroundColor: '#CE0536'
+  	fontFamily: 'courier',
+		fontWeight: 'bold',
+		borderRadius: 10,
+  	paddingTop: 40,
+  	paddingBottom: 40,
+		backgroundColor: '#CE0536',
+		shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
   },
   counter: {
   	color: 'white',
+  	backgroundColor: 'transparent',
   	alignSelf: 'center',
   	fontSize: 30,
   	marginTop: 30,
+  	fontFamily: 'courier',
   	fontWeight: 'bold'
   }
 });
