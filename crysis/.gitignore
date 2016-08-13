@@ -22,6 +22,11 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+
+#Merik's Added Ignore Files
+main.jsbundle
+main.jsbundle.meta
+
 # Android/IJ
 #
 *.iml
