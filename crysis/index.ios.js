@@ -12,6 +12,7 @@ import {
 import { registerPush } from './ios/src/helpers/helperPushNotification';
 import { getFromStorage } from './ios/src/helpers/helperLocalStorage';
 
+import Loading from './ios/src/Components/Loading';
 import Home from './ios/src/Components/Home';
 import CheckIn from './ios/src/Components/CheckIn';
 import Attendance from './ios/src/Components/Attendance';
@@ -26,6 +27,9 @@ class crysis extends Component {
   }
 
   handleRender(route, navigator) {
+    if (route.name === 'Loading') {
+      return <Loading navigator={navigator}/>
+    }
     if (route.name === 'Login') {
       return <Login navigator={navigator} />
     }
@@ -48,28 +52,15 @@ class crysis extends Component {
 
   render() {
     Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
-
-    if (getFromStorage('deviceToken')) {
-      return (
-        <View style={styles.container}>
-          <Navigator
-            initialRoute={{name: 'Home'}}
-            renderScene={this.handleRender.bind(this)}
-            configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
-          />
-        </View>
-      )
-    } else {
-      return (
-        <View style={styles.container}>
-          <Navigator
-            initialRoute={{name: 'Login'}}
-            renderScene={this.handleRender.bind(this)}
-            configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
-          />
-        </View>
-      )
-    }
+    return (
+      <View style={styles.container}>
+        <Navigator
+          initialRoute={{name: 'Loading'}}
+          renderScene={this.handleRender.bind(this)}
+          configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
+        />
+      </View>
+    )
   }
 
   onNotification(notification) {
@@ -86,6 +77,7 @@ class crysis extends Component {
       }]
     )
   }
+
 }
 
 const styles = StyleSheet.create({

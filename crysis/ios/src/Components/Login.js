@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
     padding: 30
   },
   modal: {
+    justifyContent: 'center',
     marginTop: 200,
     backgroundColor: "#FDFDF1",
     borderRadius: 5,

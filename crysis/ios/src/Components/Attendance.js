@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		alignSelf: 'center',
+		fontFamily: 'courier',
 		fontSize: 30,
 		margin: 20
 	},

@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
 	button: {
 		height: 160,
-		width: 320,
+		width: 300,
 		backgroundColor: "#6C1111",
     shadowColor: "#000000",
     shadowOpacity: 0.8,
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   	fontSize: 80,
 		textAlign: 'center',
   	fontFamily: 'courier',
-		fontWeight: 'bold',
 		borderRadius: 10,
   	paddingTop: 40,
   	paddingBottom: 40,
@@ -84,10 +83,9 @@ const styles = StyleSheet.create({
   	color: 'white',
   	backgroundColor: 'transparent',
   	alignSelf: 'center',
-  	fontSize: 30,
+  	fontSize: 20,
   	marginTop: 30,
-  	fontFamily: 'courier',
-  	fontWeight: 'bold'
+  	fontFamily: 'courier'
   }
 });
 

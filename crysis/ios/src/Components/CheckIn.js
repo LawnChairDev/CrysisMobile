@@ -13,12 +13,16 @@ import red from '../red.png';
 class CheckIn extends Component {
 	constructor(props) {
 		super(props)
+		this.state = {
+			needHelp: false
+		}
 	}
 
 	navigateSafe() {
 			// the user id will have to be changed to match the current user
 		sendUserStatus('true');
 		console.log("I'm safe");
+		this.hideHelpMessage()
 		this.props.navigator.push({
 			name: 'Attendance'
 		})
@@ -28,26 +32,70 @@ class CheckIn extends Component {
 		sendUserStatus('false');
 			// the user id will have to be changed to match the current user
 		console.log("HELP!");
-		this.props.navigator.push({
-			name: 'Attendance'
+		this.helpMessage()
+	}
+
+	hideHelpMessage() {
+		this.setState({needHelp: false}, function() {
+			console.log('Help Message OFF - ', 'false')
+		})
+	}
+
+	helpMessage() {
+		this.setState({needHelp: true}, function() {
+			styles.helpFeedback = {
+				alignSelf: 'center',
+				justifyContent: 'flex-end',
+				backgroundColor: '#FE3C3C',
+				borderRadius: 5,
+				margin: 15,
+				shadowColor: "#000000",
+    		shadowOpacity: 0.8,
+    		shadowRadius: 2,
+    		shadowOffset: {
+      		height: 2,
+      		width: 0
+    		}
+			}
+			styles.helpFeedbackText = {
+				flex: 1,
+  			padding: 5,
+  			margin: 5,
+  			color: '#fff',
+  			justifyContent: 'center',
+  			fontFamily: 'courier',
+  			fontWeight: 'bold',
+  			fontSize: 30,
+			}
 		})
 	}
 
 	render() {
+		// let helpMessageStyle;
+		// if (this.state.needHelp) {
+
+		// }
 		return (
 			<Image style={styles.container} source={red}>
+				<View style={styles.title}>
+					<Text style={styles.titleText}>Check In</Text>
+				</View>
+				<View style={styles.buttons}>
+					<TouchableHighlight
+						onPress={this.navigateSafe.bind(this)}
+						style={styles.safe}>
+						<Text style={styles.text}>SAFE</Text>
+					</TouchableHighlight>
 
-				<TouchableHighlight
-					onPress={this.navigateSafe.bind(this)}
-					style={styles.safe}>
-					<Text style={styles.text}>SAFE</Text>
-				</TouchableHighlight>
-
-				<TouchableHighlight
-					onPress={this.navigateHelp.bind(this)}
-					style={styles.help}>
-					<Text style={styles.text}>HELP</Text>
-				</TouchableHighlight>
+					<TouchableHighlight
+						onPress={this.navigateHelp.bind(this)}
+						style={styles.help}>
+						<Text style={styles.text}>HELP</Text>
+					</TouchableHighlight>
+				</View>
+					<View style={styles.helpFeedback}>
+        		<Text style={styles.helpFeedbackText}>Help Alert Sent</Text>
+        	</View>
 			</Image>
 		)
 	}
@@ -56,11 +104,28 @@ class CheckIn extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		justifyContent: 'center',
-    alignItems: 'center',
-		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-around',
     width: null,
     height: null
+	},
+	title: {
+
+	},
+	titleText: {
+		fontFamily: 'courier',
+		padding: 15,
+		color: '#fff',
+		fontSize: 60,
+		fontWeight: 'bold'
+	},
+	buttons: {
+		flexDirection: 'row',
+		alignSelf: 'center',
+		justifyContent: 'center'
+	},
+	helpFeedback: {
+		
 	},
 	help: {
 		width: 100,
@@ -97,6 +162,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
 		alignSelf: 'center',
 		paddingTop: 35,
+  },
+  helpFeedbackText: {
+  	color: 'transparent'
   }
 })
 
