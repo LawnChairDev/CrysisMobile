@@ -35,6 +35,7 @@ onSubmitLoginCredentials(){
 	})
 	.then(function(){
 		console.log('Credentials Approved');
+		that.props.changeAuthState();
 		that.navigate();
 	})
 	.catch(function(error){
