@@ -11,6 +11,7 @@ import {
 
 import { registerPush } from './ios/src/helpers/helperPushNotification';
 import { getFromStorage } from './ios/src/helpers/helperLocalStorage';
+import { getStatusList, checkIfAuthenticated } from './ios/src/helpers/helperAPI'
 
 import Loading from './ios/src/Components/Loading';
 import Home from './ios/src/Components/Home';
@@ -22,7 +23,8 @@ class crysis extends Component {
   constructor(props){
     super(props)
     this.state = {
-      isAuthenticated: true
+      isAuthenticated: false,
+      employeeStatusData: null
     }
   }
 
@@ -31,7 +33,7 @@ class crysis extends Component {
       return <Loading navigator={navigator}/>
     }
     if (route.name === 'Login') {
-      return <Login navigator={navigator} />
+      return <Login navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
     }
     if (route.name === 'Home') {
       return <Home navigator={navigator} />
@@ -40,12 +42,34 @@ class crysis extends Component {
       return <CheckIn navigator={navigator} />
     }
     if (route.name === 'Attendance') {
-      return <Attendance navigator={navigator} />
+      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} />
     }
   }
 
   componentWillMount() {
-    registerPush()
+    var self = this;
+    registerPush();
+    checkIfAuthenticated()
+      .then(function(){
+        console.log('this totally is running');
+        self.setState({isAuthenticated: true});
+        getStatusList()
+          .then(function(response) {
+            console.log('running inside of getStatusList on willMount');
+            return response.json()
+            // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+          })
+          .then(function(data){
+            console.log("just JSON'ed in getStatusList", data);
+            self.setState({employeeStatusData: data});
+          })
+          .catch(function(err) {
+            console.log('Error Recieving Data - ', err);
+          })
+      })
+      .catch(function(){
+        console.log('error in retreiving jwt from storage');
+      })
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
     console.log('this comp started up')
   }
@@ -64,8 +88,16 @@ class crysis extends Component {
   }
 
   onNotification(notification) {
+    var self = this;
+    console.log("a push notification was received");
     if(notification.getData().silent){
-      //FILL IN WITH UPDATE TO VIEW ON EMPLOYEE LIST
+      getStatusList().then(function(response) {
+        self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+        console.log('Data Recieved - ', JSON.parse(response._bodyInit));
+      }).catch(function(err) {
+        console.log('Error Recieving Data - ', err);
+      })
+
       return;
     }
     AlertIOS.alert(
@@ -78,6 +110,22 @@ class crysis extends Component {
     )
   }
 
+  onAuthenticated() {
+    this.setState({isAuthenticated: true});
+    getStatusList()
+      .then(function(response) {
+        console.log('running inside of getStatusList on willMount');
+        return response.json()
+        // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+      })
+      .then(function(data){
+        console.log("just JSON'ed in getStatusList", data);
+        self.setState({employeeStatusData: data});
+      })
+      .catch(function(err) {
+        console.log('Error Recieving Data - ', err);
+      })
+  }
 }
 
 const styles = StyleSheet.create({

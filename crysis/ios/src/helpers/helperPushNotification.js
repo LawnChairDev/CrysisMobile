@@ -16,6 +16,7 @@ export function registerPush(){
       console.log('something went wrong your deviceToken was not stored in phone')
     })
   });
+  PushNotificationIOS.setApplicationIconBadgeNumber(0)
 }
 
 export function attachDeviceToken(){
