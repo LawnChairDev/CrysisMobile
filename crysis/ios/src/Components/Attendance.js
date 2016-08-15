@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-	View,
+	Image,
 	Text,
 	StyleSheet,
 	TouchableHighlight,
@@ -9,6 +9,7 @@ import {
 
 // import { getStatusList } from '../helpers/helperAPI'
 import EmployeeEntry from './EmployeeEntry';
+import red from '../red.png';
 import _ from 'lodash'
 
 class Attendance extends Component {
@@ -50,17 +51,13 @@ class Attendance extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<Image style={styles.container} source={red}>
 					<Text style={styles.title}>Attendance</Text>
 				<ScrollView style={styles.scrollBox}>
 					{ this.mapData() }
 				</ScrollView>
-					<TouchableHighlight
-						style={styles.button}
-						onPress={() => this.props.navigator.pop()}>
-							<Text style={styles.buttonText}>BACK</Text>
-					</TouchableHighlight>
-			</View>
+				
+			</Image>
 		)
 	}
 }
@@ -68,24 +65,24 @@ class Attendance extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		height: null,
+		width: null,
 		flexDirection: 'column',
-		backgroundColor: '#BFDBF3',
 		justifyContent: 'space-between'
 	},
 	title: {
 		alignSelf: 'center',
 		fontFamily: 'courier',
+		color: '#fff',
 		fontSize: 30,
 		margin: 20
 	},
 	scrollBox: {
-		margin: 20,
-		marginTop: 0
+		alignSelf: 'center'
 	},
 	button: {
 		height: 30,
 		width: 60,
-		margin: 25,
 		backgroundColor: '#1396C2'
 	},
 	buttonText: {
