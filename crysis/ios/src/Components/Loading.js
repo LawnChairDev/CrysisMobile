@@ -5,7 +5,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { getFromStorage } from '../helpers/helperLocalStorage'
+import { getFromStorage } from '../helpers/helperLocalStorage';
 import { checkIfAuthenticated, getEmergencyStatus } from '../helpers/helperAPI'
 import red from '../red.png';
 
