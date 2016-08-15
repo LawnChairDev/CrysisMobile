@@ -23,7 +23,7 @@ class CheckIn extends Component {
 		sendUserStatus('safe')
 			.then(function(){
 				console.log("pushed the I'm safe button");
-				this.hideHelpMessage()
+				self.hideHelpMessage()
 				self.props.navigator.push({
 					name: 'Attendance'
 				})
@@ -34,10 +34,11 @@ class CheckIn extends Component {
 	}
 
 	navigateHelp() {
+		var self = this;
 		sendUserStatus('inDanger')
 			.then(function(){
 				console.log("pushed the in danger button");
-				this.helpMessage();
+				self.helpMessage();
 				// this.props.navigator.push({
 				// 	name: 'Attendance'
 				// })
