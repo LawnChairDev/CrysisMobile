@@ -6,6 +6,8 @@ import {
 } from 'react-native';
 
 import { getFromStorage } from '../helpers/helperLocalStorage'
+import { checkIfAuthenticated } from '../helpers/helperAPI'
+
 import red from '../red.png';
 
 class Loading extends Component {
@@ -14,19 +16,28 @@ class Loading extends Component {
 	}
 
 	componentDidMount() {
-		if (getFromStorage('deviceToken')) {
-			this.props.navigator.push({
-				name: 'Home'
+		var self = this;
+		checkIfAuthenticated()
+			.then(function(jwt){
+				console.log('this is the jwt grabbed from storage', jwt)
+				if(jwt){
+					console.log('found token for authentication');
+					self.props.changeAuthState();
+					self.props.navigator.push({
+						name: 'Home'
+					})
+				} else {
+					self.props.navigator.push({
+						name: 'Login'
+					})
+				}
 			})
-		} else {
-			this.props.navigator.push({
-				name: 'Login'
+			.catch(function(err){
+				console.log(err);
 			})
-		}
 	}
 
 	render() {
-		if (getFromStorage('deviceToken')) {}
 		return (
 			<Image style={styles.container} source={red}>
 				<Text style={styles.text}>Loading Crysis...</Text>

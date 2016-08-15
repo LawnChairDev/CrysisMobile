@@ -7,10 +7,12 @@ import {
 
 const EmployeeEntry = (props) => {
 	var entryStyle;
-		if (props.status === 'true') {
-			entryStyle = styles.entrySafe
+		if (props.status === 'safe') {
+			entryStyle = styles.entrySafe;
+		} else if (props.status === 'inDanger') {
+			entryStyle = styles.entryHelp;
 		} else {
-			entryStyle = styles.entryHelp
+			entryStyle = styles.entryDefault;
 		}
 	return (
 		<View style={entryStyle}>

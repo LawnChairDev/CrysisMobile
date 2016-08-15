@@ -1,18 +1,29 @@
 import { AsyncStorage } from 'react-native';
 import { attachDeviceToken } from './helperPushNotification';
+import rootUrl from './url';
 
-// var rootUrl = 'http://192.168.1.56:3000';
-var rootUrl = 'http://localhost:3000';
+console.log(rootUrl, "root URL");
 
 var jwt;
-AsyncStorage.getItem('jwtToken')
+
+export function checkIfAuthenticated(){
+  return AsyncStorage.getItem('jwtToken')
   .then(function(data){
-    jwt = data;
-    console.log('your jwt was successfully loaded into memory');
-  })
+    console.log(data, "data from AsyncStorage get");
+    if(data){
+      jwt = data;
+      console.log('your jwt was successfully loaded into memory');
+      }
+      return new Promise(function(success, fail){
+        success(jwt);
+      })
+    })
   .catch(function(){
-    console.log('unable to retreive jwt from storage');
+    return new Promise(function(success, fail){
+      fail('unable to retreive jwt from storage');
+    })
   })
+}
 
 export function sendEmergencyAlert(){
   console.log('running emergencyAlertCall');
@@ -28,14 +39,13 @@ export function sendEmergencyAlert(){
     //   emergencyStatus: 'true'
     // })
   }
-  console.log(url, "url", config, "config");
+  console.log("inside sending emergency alert", url, "url", config, "config");
   return fetch(url, config);
 }
 
 export function sendUserStatus(userStatus){
-  console.log('running userStatusCall');
-  // === NEED TO SETUP ROUTE === //
-  var url = buildUrl(rootUrl, '/api/user/?id=2&column=status')
+  console.log('running userStatusCall with the following status: ', userStatus);
+  var url = buildUrl(rootUrl, '/api/statusUpdate')
   var config = {
     method: "PUT",
     headers: {
@@ -47,19 +57,20 @@ export function sendUserStatus(userStatus){
         status: userStatus
     })
   }
-  // return fetch(url, config);
+  return fetch(url, config);
 }
 
 export function getStatusList(){
   console.log('running getStatusList');
   // === NEED TO SETUP ROUTE === //
-  var url = buildUrl(rootUrl, '/api/user');
+  var url = buildUrl(rootUrl, '/api/statusUpdate');
   var config = {
     method: "GET",
     headers: {
       "x-access-token": jwt
     }
   }
+  console.log(url, "url", config, "config");
   return fetch(url, config);
 }
 
@@ -80,9 +91,6 @@ export function sendDeviceToken(deviceToken){
 }
 
 export function sendLoginCredentials(loginObj){
-  console.log('running submitLoginCredentials');
-  var copiedObj = Object.assign({}, loginObj);
-  console.log(copiedObj);
   return AsyncStorage.getItem('deviceToken')
   .then(function(dvcToken){
     console.log(dvcToken, "device token retreived from storage");
@@ -104,8 +112,14 @@ export function sendLoginCredentials(loginObj){
   .then(function(data){
     console.log('attached jwt to api calls')
     console.log(data, 'data returned from server on login')
-    jwt = data.token;
-    return AsyncStorage.setItem('jwtToken', data.token)
+    if(data.token){
+      jwt = data.token;
+      return AsyncStorage.setItem('jwtToken', data.token)
+    } else {
+      return new Promise(function(success, fail){
+        fail("incorrect login");
+      })
+    }
   })
 }
 

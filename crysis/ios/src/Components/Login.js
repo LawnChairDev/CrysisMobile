@@ -21,21 +21,24 @@ class Login extends Component {
     }
   }
 
-	navigate() {
-		this.props.navigator.push({
-			name: 'Home'
-		});
-	}
+	// navigate() {
+	// 	this.props.navigator.push({
+	// 		name: 'Home'
+	// 	});
+	// }
 
 onSubmitLoginCredentials(){
-	var that = this;
+	var self = this;
 	sendLoginCredentials({
 		username: this.state.usernameTextbox,
 		password: this.state.passwordTextbox
 	})
 	.then(function(){
 		console.log('Credentials Approved');
-		that.navigate();
+		self.props.changeAuthState();
+		self.props.navigator.push({
+			name: 'Home'
+		})
 	})
 	.catch(function(error){
 		console.log('Error Approving Credentials - ', error);

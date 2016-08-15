@@ -19,21 +19,31 @@ class CheckIn extends Component {
 	}
 
 	navigateSafe() {
-			// the user id will have to be changed to match the current user
-		sendUserStatus('true');
-		console.log("I'm safe");
-		this.hideHelpMessage()
-		this.props.navigator.push({
-			name: 'Attendance'
-		})
+		var self = this;
+		sendUserStatus('safe')
+			.then(function(){
+				console.log("pushed the I'm safe button");
+				self.hideHelpMessage();
+				self.props.navigator.push({
+					name: 'Attendance'
+				})
+			})
+			.catch(function(err){
+				console.log("error inside of sendUserStatus", err);
+			})
 	}
-	
+
 	navigateHelp() {
-		sendUserStatus('false');
-			// the user id will have to be changed to match the current user
-		console.log("HELP!");
-		this.helpMessage()
-	}
+		var self = this;
+		sendUserStatus('inDanger')
+			.then(function(){
+				console.log("pushed the in danger button");
+				self.helpMessage();
+				// this.props.navigator.push({
+				// 	name: 'Attendance'
+				// })
+			})
+		}
 
 	hideHelpMessage() {
 		this.setState({needHelp: false}, function() {
@@ -125,7 +135,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	helpFeedback: {
-		
+
 	},
 	help: {
 		width: 100,

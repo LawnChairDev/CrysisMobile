@@ -7,30 +7,34 @@ import {
 	ScrollView
 } from 'react-native';
 
-import { getStatusList } from '../helpers/helperAPI'
+// import { getStatusList } from '../helpers/helperAPI'
 import EmployeeEntry from './EmployeeEntry';
 import _ from 'lodash'
 
 class Attendance extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			userData: ''
-		}
+		// this.state = {
+		// 	employeeStatusData: ''
+		// }
+	}
+
+	componentWillMount() {
+		this.props.checkAttendanceList();
 	}
 
 	componentDidMount() {
-		let self = this;
-		getStatusList().then(function(response) {
-			self.setState({userData: JSON.parse(response._bodyInit)})
-			console.log('Data Recieved - ', JSON.parse(response._bodyInit));
-		}).catch(function(err) {
-			console.log('Error Recieving Data - ', err);
-		})
+		// let self = this;
+		// getStatusList().then(function(response) {
+		// 	self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+		// 	console.log('Data Recieved - ', JSON.parse(response._bodyInit));
+		// }).catch(function(err) {
+		// 	console.log('Error Recieving Data - ', err);
+		// })
 	}
 
 	mapData() {
-		return _.map(this.state.userData, function(user, i) {
+		return _.map(this.props.empData, function(user, i) {
 			 return (
 		 			<EmployeeEntry
 						id={user.id}
