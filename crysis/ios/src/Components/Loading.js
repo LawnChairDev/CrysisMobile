@@ -5,9 +5,8 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { getFromStorage } from '../helpers/helperLocalStorage'
-import { checkIfAuthenticated } from '../helpers/helperAPI'
-
+import { getFromStorage } from '../helpers/helperLocalStorage';
+import { checkIfAuthenticated } from '../helpers/helperAPI';
 import red from '../red.png';
 
 class Loading extends Component {
@@ -39,9 +38,7 @@ class Loading extends Component {
 
 	render() {
 		return (
-			<Image style={styles.container} source={red}>
-				<Text style={styles.text}>Loading Crysis...</Text>
-			</Image>
+			<Image style={styles.container} source={red}></Image>
 		)
 	}
 }
@@ -49,18 +46,8 @@ class Loading extends Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-around',
-		alignItems: 'center',
 		width: null,
 		height: null
-	},
-	text: {
-		flex: 1,
-		marginLeft: 40,
-		alignSelf: 'center',
-		fontFamily: 'courier',
-		fontSize: 30,
 	}
 })
 
