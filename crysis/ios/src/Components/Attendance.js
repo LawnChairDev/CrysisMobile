@@ -14,9 +14,13 @@ import _ from 'lodash'
 class Attendance extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			employeeStatusData: ''
-		}
+		// this.state = {
+		// 	employeeStatusData: ''
+		// }
+	}
+
+	componentWillMount() {
+		this.props.checkAttendanceList();
 	}
 
 	componentDidMount() {

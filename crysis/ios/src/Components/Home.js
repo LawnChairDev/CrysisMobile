@@ -13,21 +13,31 @@ import green from '../green.png';
 class Home extends Component {
 	constructor(props) {
 		super(props)
-	}	
-
-	navigate() {
-		this.props.navigator.push({
-			name: 'CheckIn'
-		})
-		sendEmergencyAlert();
 	}
+
+	onEmergencyAlert() {
+		var self = this;
+		sendEmergencyAlert()
+			.then(function(){
+				self.props.navigator.push({
+					name: 'CheckIn'
+				})
+			})
+	}
+
+	// navigate() {
+	// 	this.props.navigator.push({
+	// 		name: 'CheckIn'
+	// 	})
+	// 	sendEmergencyAlert();
+	// }
 
 	render() {
 		return (
 			<Image style={styles.container} source={green}>
 			    <TouchableHighlight
 			    	delayLongPress={4500}
-			    	onLongPress={this.navigate.bind(this)}
+			    	onLongPress={this.onEmergencyAlert.bind(this)}
 			    	style={styles.button}
 			    >
 					<View>

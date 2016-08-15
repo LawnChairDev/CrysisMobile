@@ -26,6 +26,7 @@ project.xcworkspace
 #Merik's Added Ignore Files
 main.jsbundle
 main.jsbundle.meta
+ios/src/helpers/url.js
 
 # Android/IJ
 #

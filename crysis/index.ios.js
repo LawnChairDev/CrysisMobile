@@ -30,7 +30,7 @@ class crysis extends Component {
 
   handleRender(route, navigator) {
     if (route.name === 'Loading') {
-      return <Loading navigator={navigator}/>
+      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
     }
     if (route.name === 'Login') {
       return <Login navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
@@ -42,34 +42,34 @@ class crysis extends Component {
       return <CheckIn navigator={navigator} />
     }
     if (route.name === 'Attendance') {
-      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} />
+      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList} />
     }
   }
 
   componentWillMount() {
     var self = this;
     registerPush();
-    checkIfAuthenticated()
-      .then(function(){
-        console.log('this totally is running');
-        self.setState({isAuthenticated: true});
-        getStatusList()
-          .then(function(response) {
-            console.log('running inside of getStatusList on willMount');
-            return response.json()
-            // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
-          })
-          .then(function(data){
-            console.log("just JSON'ed in getStatusList", data);
-            self.setState({employeeStatusData: data});
-          })
-          .catch(function(err) {
-            console.log('Error Recieving Data - ', err);
-          })
-      })
-      .catch(function(){
-        console.log('error in retreiving jwt from storage');
-      })
+    // checkIfAuthenticated()
+    //   .then(function(){
+    //     console.log('this totally is running');
+    //     self.setState({isAuthenticated: true});
+    //     getStatusList()
+    //       .then(function(response) {
+    //         console.log('running inside of getStatusList on willMount');
+    //         return response.json()
+    //         // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+    //       })
+    //       .then(function(data){
+    //         console.log("just JSON'ed in getStatusList", data);
+    //         self.setState({employeeStatusData: data});
+    //       })
+    //       .catch(function(err) {
+    //         console.log('Error Recieving Data - ', err);
+    //       })
+    //   })
+    //   .catch(function(){
+    //     console.log('error in retreiving jwt from storage');
+    //   })
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
     console.log('this comp started up')
   }
@@ -91,13 +91,7 @@ class crysis extends Component {
     var self = this;
     console.log("a push notification was received");
     if(notification.getData().silent){
-      getStatusList().then(function(response) {
-        self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
-        console.log('Data Recieved - ', JSON.parse(response._bodyInit));
-      }).catch(function(err) {
-        console.log('Error Recieving Data - ', err);
-      })
-
+      this.checkAttendanceList();
       return;
     }
     AlertIOS.alert(
@@ -112,15 +106,35 @@ class crysis extends Component {
 
   onAuthenticated() {
     this.setState({isAuthenticated: true});
+    // getStatusList()
+    //   .then(function(response) {
+    //     console.log('running inside of getStatusList on willMount');
+    //     return response.json()
+    //     // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
+    //   })
+    //   .then(function(data){
+    //     console.log("just JSON'ed in getStatusList", data);
+    //     self.setState({employeeStatusData: data}, function(){
+    //       console.log(self.state.employeeStatusData);
+    //     });
+    //   })
+    //   .catch(function(err) {
+    //     console.log('Error Recieving Data - ', err);
+    //   })
+  }
+
+  checkAttendanceList() {
+    var self = this;
     getStatusList()
       .then(function(response) {
-        console.log('running inside of getStatusList on willMount');
+        console.log('running inside of getStatusList of checkAttendanceList');
         return response.json()
-        // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
       })
       .then(function(data){
         console.log("just JSON'ed in getStatusList", data);
-        self.setState({employeeStatusData: data});
+        self.setState({employeeStatusData: data}, function(){
+          console.log(self.state.employeeStatusData, "new state");
+        });
       })
       .catch(function(err) {
         console.log('Error Recieving Data - ', err);

@@ -34,14 +34,16 @@ class CheckIn extends Component {
 	}
 
 	navigateHelp() {
+		var self = this;
 		sendUserStatus('inDanger')
 			.then(function(){
 				console.log("pushed the in danger button");
+				self.helpMessage();
 				// this.props.navigator.push({
 				// 	name: 'Attendance'
 				// })
 			})
-	}
+		}
 
 	hideHelpMessage() {
 		this.setState({needHelp: false}, function() {
