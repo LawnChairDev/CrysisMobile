@@ -42,7 +42,7 @@ class crysis extends Component {
       return <CheckIn navigator={navigator} />
     }
     if (route.name === 'Attendance') {
-      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList} />
+      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList.bind(this)} />
     }
   }
 
