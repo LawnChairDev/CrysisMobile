@@ -15,6 +15,28 @@ class Home extends Component {
 		super(props)
 	}
 
+	componentWillReceiveProps(newProps) {
+		// console.log(this.props);
+		// console.log(newProps);
+		if(this.props.inEmergency === false && newProps.inEmergency === true){
+			console.log('we have determined that props inEmergency is true')
+			this.props.navigator.push({
+				name: 'CheckIn'
+			})
+		}
+	}
+
+	// componentWillUpdate(){
+	// 	console.log('componentWillUpdate called inside of Home Component')
+	// 	if(this.props.inEmergency){
+	// 		console.log('inEmergency is equal to: ', this.props.inEmergency);
+	// 		console.log('inEmergency is true about to push navigator into Check In');
+	// 		this.props.navigator.push({
+	// 			name: 'CheckIn'
+	// 		})
+	// 	}
+	// }
+
 	onEmergencyAlert() {
 		var self = this;
 		sendEmergencyAlert()
@@ -22,6 +44,10 @@ class Home extends Component {
 				self.props.navigator.push({
 					name: 'CheckIn'
 				})
+			})
+			.catch(function(err){
+				console.log('call to send emergencyAlert did not work')
+				console.log('here is the error', err)
 			})
 	}
 

@@ -24,25 +24,26 @@ class crysis extends Component {
     super(props)
     this.state = {
       isAuthenticated: false,
-      employeeStatusData: null
+      employeeStatusData: null,
+      inEmergency: false
     }
   }
 
   handleRender(route, navigator) {
     if (route.name === 'Loading') {
-      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
+      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)} inEmergency={this.state.inEmergency}/>
     }
     if (route.name === 'Login') {
       return <Login navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
     }
     if (route.name === 'Home') {
-      return <Home navigator={navigator} />
+      return <Home navigator={navigator} inEmergency={this.state.inEmergency}/>
     }
     if (route.name === 'CheckIn') {
       return <CheckIn navigator={navigator} />
     }
     if (route.name === 'Attendance') {
-      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList} />
+      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList.bind(this)} />
     }
   }
 
@@ -94,14 +95,17 @@ class crysis extends Component {
       this.checkAttendanceList();
       return;
     }
-    AlertIOS.alert(
-      "Push Notification Received",
-      "Alert message: " + notification.getMessage(),
-      [{
-        text: "Dismiss",
-        onPress: null
-      }]
-    )
+    if(!this.state.inEmergency){
+      AlertIOS.alert(
+        "Push Notification Received",
+        "Alert message: " + notification.getMessage(),
+        [{
+          text: "Dismiss",
+          onPress: null
+        }]
+      )
+      this.setState({inEmergency: true});
+    }
   }
 
   onAuthenticated() {

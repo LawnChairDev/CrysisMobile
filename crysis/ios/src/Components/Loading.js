@@ -23,9 +23,15 @@ class Loading extends Component {
 				if(jwt){
 					console.log('found token for authentication');
 					self.props.changeAuthState();
-					self.props.navigator.push({
-						name: 'Home'
-					})
+					if(this.state.inEmergency){
+						self.props.navigator.push({
+							name: 'CheckIn'
+						})
+					} else {
+						self.props.navigator.push({
+							name: 'Home'
+						})
+					}
 				} else {
 					self.props.navigator.push({
 						name: 'Login'
