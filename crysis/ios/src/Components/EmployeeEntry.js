@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
 		paddingRight: 20,
 		paddingLeft: 20,
 		padding: 6,
-		alignSelf: 'center',
 		borderRadius: 7,
 		backgroundColor: '#3ED715',
 		shadowColor: "#000000",
