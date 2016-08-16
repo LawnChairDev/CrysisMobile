@@ -87,8 +87,8 @@ onSubmitLoginCredentials(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
     width: null,
     height: null
   },
@@ -120,12 +120,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    alignSelf: 'stretch',
     padding: 30
   },
   modal: {
     justifyContent: 'center',
-    marginTop: 200,
     backgroundColor: "#FDFDF1",
     borderRadius: 5,
     shadowColor: "#000000",
