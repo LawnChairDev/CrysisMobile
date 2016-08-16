@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {
 	Image,
 	Text,
+	View,
 	StyleSheet,
 	TouchableHighlight,
 	ScrollView
 } from 'react-native';
 
-// import { getStatusList } from '../helpers/helperAPI'
 import EmployeeEntry from './EmployeeEntry';
 import red from '../red.png';
 import _ from 'lodash'
@@ -15,37 +15,23 @@ import _ from 'lodash'
 class Attendance extends Component {
 	constructor(props) {
 		super(props)
-		// this.state = {
-		// 	employeeStatusData: ''
-		// }
 	}
 
 	componentWillMount() {
 		this.props.checkAttendanceList();
 	}
 
-	componentDidMount() {
-		// let self = this;
-		// getStatusList().then(function(response) {
-		// 	self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
-		// 	console.log('Data Recieved - ', JSON.parse(response._bodyInit));
-		// }).catch(function(err) {
-		// 	console.log('Error Recieving Data - ', err);
-		// })
-	}
-
 	mapData() {
 		return _.map(this.props.empData, function(user, i) {
-			 return (
-		 			<EmployeeEntry
-						id={user.id}
-						key={i}
-						name={user.name}
-						status={user.status}
-						wardenName={user.wardenName}
-						isAdmin={user.isAdmin}
-					/>
-				)
+		 	return (
+	 			<EmployeeEntry
+					id={user.id}
+					key={i}
+					name={user.name}
+					status={user.status}
+					wardenName={user.wardenName}
+				/>
+			)
 		})
 	}
 
@@ -56,7 +42,11 @@ class Attendance extends Component {
 				<ScrollView style={styles.scrollBox}>
 					{ this.mapData() }
 				</ScrollView>
-				
+				<TouchableHighlight style={styles.button} onPress={() => this.props.navigator.pop()}>
+					<View>
+						<Text style={styles.buttonText}>BACK</Text>
+					</View>
+				</TouchableHighlight>
 			</Image>
 		)
 	}
@@ -83,10 +73,21 @@ const styles = StyleSheet.create({
 	button: {
 		height: 30,
 		width: 60,
-		backgroundColor: '#1396C2'
+		alignSelf: 'center',
+		backgroundColor: 'gray',
+		margin: 20,
+		borderRadius: 7,
+		shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 0
+    }
 	},
 	buttonText: {
 		fontWeight: 'bold',
+		alignSelf: 'center',
 		padding: 5,
 		color: '#fff'
 	 }
