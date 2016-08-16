@@ -17,15 +17,10 @@ class Login extends Component {
     super(props);
     this.state = {
       usernameTextbox: '',
-      passwordTextbox: ''
+      passwordTextbox: '',
+      errorMessage: ''
     }
   }
-
-	// navigate() {
-	// 	this.props.navigator.push({
-	// 		name: 'Home'
-	// 	});
-	// }
 
 onSubmitLoginCredentials(){
 	var self = this;
@@ -41,7 +36,8 @@ onSubmitLoginCredentials(){
 		})
 	})
 	.catch(function(error){
-		console.log('Error Approving Credentials - ', error);
+    self.setState({errorMessage: 'Incorrect Login'})
+    console.log('Error Approving Credentials - ', error);
 	})
 }
 
@@ -55,6 +51,7 @@ onSubmitLoginCredentials(){
         >
           <View style={styles.modal}>
             <Text style={styles.title}>Crysis</Text>
+            <Text style={styles.errorMessage}>{ this.state.errorMessage }</Text>
             <TextInput
               style={styles.textBoxes}
               autoCapitalize={'none'}
@@ -90,13 +87,12 @@ onSubmitLoginCredentials(){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'center',
     width: null,
     height: null
   },
   button: {
-    alignItems: 'center',
     justifyContent: 'center',
     height: 40,
     margin: 5,
@@ -110,9 +106,17 @@ const styles = StyleSheet.create({
   },
   title: {
     alignSelf: 'center',
-    marginBottom: 15,
+    marginTop: 15,
     fontSize: 50,
     fontFamily: 'courier',
+  },
+  errorMessage: {
+    color: '#6C1111',
+    fontFamily: 'courier',
+    fontSize: 15,
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    justifyContent: 'center'
   },
   scrollView: {
     flex: 1,
