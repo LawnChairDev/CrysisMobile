@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import {
 	View,
 	Text,
-	Image,
 	StyleSheet,
 	TouchableHighlight
 } from 'react-native';
 
 import { sendEmergencyAlert } from '../helpers/helperAPI';
-import green from '../green.png';
 
 class Home extends Component {
 	constructor(props) {
@@ -25,29 +23,22 @@ class Home extends Component {
 			})
 	}
 
-	// navigate() {
-	// 	this.props.navigator.push({
-	// 		name: 'CheckIn'
-	// 	})
-	// 	sendEmergencyAlert();
-	// }
-
 	render() {
 		return (
-			<Image style={styles.container} source={green}>
-			    <TouchableHighlight
-			    	delayLongPress={4500}
-			    	onLongPress={this.onEmergencyAlert.bind(this)}
-			    	style={styles.button}
-			    >
+			<View style={styles.container}>
+		   	<TouchableHighlight
+		    	delayLongPress={4500}
+		    	onLongPress={this.onEmergencyAlert.bind(this)}
+		    	style={styles.button}
+		    >
 					<View>
 	  					<Text style={styles.buttonText}>Crysis</Text>
 					</View>
-			</TouchableHighlight>
+				</TouchableHighlight>
 					<View>
   					<Text style={styles.counter}>Hold For 5 Seconds</Text>
   				</View>
-  		</Image>
+  		</View>
 		)
 	}
 }
