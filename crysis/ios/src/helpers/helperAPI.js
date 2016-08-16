@@ -90,6 +90,18 @@ export function sendDeviceToken(deviceToken){
   return fetch(url, config);
 }
 
+export function getEmergencyStatus(){
+  console.log('call inside of getEmergencyStatus');
+  var url = buildUrl(rootUrl, '/api/alert');
+  var config = {
+    method: "GET",
+    headers: {
+      "x-access-token": jwt
+    }
+  }
+  return fetch(url, config);
+}
+
 export function sendLoginCredentials(loginObj){
   return AsyncStorage.getItem('deviceToken')
   .then(function(dvcToken){

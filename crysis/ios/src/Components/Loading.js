@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 
 import { getFromStorage } from '../helpers/helperLocalStorage'
-import { checkIfAuthenticated } from '../helpers/helperAPI'
+import { checkIfAuthenticated, getEmergencyStatus } from '../helpers/helperAPI'
 
 import red from '../red.png';
 
@@ -23,9 +23,28 @@ class Loading extends Component {
 				if(jwt){
 					console.log('found token for authentication');
 					self.props.changeAuthState();
-					self.props.navigator.push({
-						name: 'Home'
-					})
+					getEmergencyStatus()
+						.then(function(response){
+							console.log(response);
+							return response.json();
+						})
+						.then(function(data){
+							console.log("data inside of json'd getEmergencyStatus", data);
+							if(data.emergencyStatus === true){
+								console.log("emergencyStatus is true so we are going in here");
+								self.props.changeEmergencyState();
+								self.props.navigator.push({
+									name: 'CheckIn'
+								})
+							} else {
+								self.props.navigator.push({
+									name: 'Home'
+								})
+							}
+						})
+						.catch(function(err){
+							console.log('there was an error trying to get emergencyStatus here it is: ', err);
+						})
 				} else {
 					self.props.navigator.push({
 						name: 'Login'
