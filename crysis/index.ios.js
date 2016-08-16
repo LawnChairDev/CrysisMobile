@@ -9,15 +9,15 @@ import {
   View
 } from 'react-native';
 
-import { registerPush } from './ios/src/helpers/helperPushNotification';
-import { getFromStorage } from './ios/src/helpers/helperLocalStorage';
-import { getStatusList, checkIfAuthenticated, getEmergencyStatus } from './ios/src/helpers/helperAPI'
+import { registerPush } from './src/helpers/helperPushNotification';
+import { getFromStorage } from './src/helpers/helperLocalStorage';
+import { getStatusList, checkIfAuthenticated, getEmergencyStatus } from './src/helpers/helperAPI'
 
-import Loading from './ios/src/Components/Loading';
-import Home from './ios/src/Components/Home';
-import CheckIn from './ios/src/Components/CheckIn';
-import Attendance from './ios/src/Components/Attendance';
-import Login from './ios/src/Components/Login';
+import Loading from './src/Components/Loading';
+import Home from './src/Components/Home';
+import CheckIn from './src/Components/CheckIn';
+import Attendance from './src/Components/Attendance';
+import Login from './src/Components/Login';
 
 class crysis extends Component {
   constructor(props){
