@@ -26,6 +26,8 @@ const EmployeeEntry = (props) => {
 const styles = StyleSheet.create({
 	entryDefault: {
 		margin: 5,
+		paddingRight: 20,
+		paddingLeft: 20,
 		padding: 6,
 		borderRadius: 7,
 		backgroundColor: 'gray',
@@ -39,8 +41,9 @@ const styles = StyleSheet.create({
 	},
 	entrySafe: {
 		margin: 5,
+		paddingRight: 20,
+		paddingLeft: 20,
 		padding: 6,
-		alignSelf: 'center',
 		borderRadius: 7,
 		backgroundColor: '#3ED715',
 		shadowColor: "#000000",
@@ -53,6 +56,8 @@ const styles = StyleSheet.create({
 	},
 	entryHelp: {
 		margin: 5,
+		paddingRight: 20,
+		paddingLeft: 20,
 		padding: 6,
 		borderRadius: 7,
 		backgroundColor: '#FE3C3C',
@@ -67,14 +72,14 @@ const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
 		fontSize: 17,
-		fontFamily: 'courier',
+		// fontFamily: 'courier',
 		fontWeight: 'bold',
 		padding: 3
 	},
 	name: {
 		color: 'black',
 		fontSize: 17,
-		fontFamily: 'courier',
+		// fontFamily: 'courier',
 		fontWeight: 'bold',
 		padding: 3
 	}
