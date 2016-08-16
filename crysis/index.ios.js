@@ -11,7 +11,7 @@ import {
 
 import { registerPush } from './ios/src/helpers/helperPushNotification';
 import { getFromStorage } from './ios/src/helpers/helperLocalStorage';
-import { getStatusList, checkIfAuthenticated } from './ios/src/helpers/helperAPI'
+import { getStatusList, checkIfAuthenticated, getEmergencyStatus } from './ios/src/helpers/helperAPI'
 
 import Loading from './ios/src/Components/Loading';
 import Home from './ios/src/Components/Home';
@@ -31,7 +31,7 @@ class crysis extends Component {
 
   handleRender(route, navigator) {
     if (route.name === 'Loading') {
-      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)} inEmergency={this.state.inEmergency}/>
+      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)} inEmergency={this.state.inEmergency} changeEmergencyState={this.onEmergencyAlert.bind(this)} />
     }
     if (route.name === 'Login') {
       return <Login navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
@@ -125,6 +125,10 @@ class crysis extends Component {
     //   .catch(function(err) {
     //     console.log('Error Recieving Data - ', err);
     //   })
+  }
+
+  onEmergencyAlert(){
+    this.setState({inEmergency: true});
   }
 
   checkAttendanceList() {
