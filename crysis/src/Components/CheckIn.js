@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { sendUserStatus } from '../helpers/helperAPI';
-import { debounce } from 'throttle-debounce';
+import _ from 'lodash';
 import red from '../red.png';
 
 class CheckIn extends Component {
@@ -17,6 +17,7 @@ class CheckIn extends Component {
 		this.state = {
 			needHelp: false
 		}
+
 	}
 
 	navigateSafe() {
@@ -82,6 +83,7 @@ class CheckIn extends Component {
 	}
 
 	render() {
+		let navigateSafe = _.debounce(this.navigateSafe.bind(this), 1000);
 		return (
 			<Image style={styles.container} source={red}>
 				<View style={styles.title}>
@@ -89,7 +91,7 @@ class CheckIn extends Component {
 				</View>
 				<View style={styles.buttons}>
 					<TouchableHighlight
-						onPress={debounce(1000, this.navigateSafe.bind(this))}
+						onPress={navigateSafe}
 						style={styles.safe}>
 						<Text style={styles.text}>SAFE</Text>
 					</TouchableHighlight>
