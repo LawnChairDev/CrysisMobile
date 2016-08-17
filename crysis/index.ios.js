@@ -31,19 +31,37 @@ class crysis extends Component {
 
   handleRender(route, navigator) {
     if (route.name === 'Loading') {
-      return <Loading navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)} inEmergency={this.state.inEmergency} changeEmergencyState={this.onEmergencyAlert.bind(this)} />
+      return <Loading
+                navigator={navigator}
+                changeAuthState={this.onAuthenticated.bind(this)}
+                inEmergency={this.state.inEmergency}
+                changeEmergencyState={this.onEmergencyAlert.bind(this)}
+              />
     }
     if (route.name === 'Login') {
-      return <Login navigator={navigator} changeAuthState={this.onAuthenticated.bind(this)}/>
+      return <Login
+                navigator={navigator}
+                changeAuthState={this.onAuthenticated.bind(this)}
+                changeEmergencyState={this.onEmergencyAlert.bind(this)}
+              />
     }
     if (route.name === 'Home') {
-      return <Home navigator={navigator} inEmergency={this.state.inEmergency}/>
+      return <Home
+                navigator={navigator}
+                inEmergency={this.state.inEmergency}
+              />
     }
     if (route.name === 'CheckIn') {
-      return <CheckIn navigator={navigator} />
+      return <CheckIn
+                navigator={navigator}
+              />
     }
     if (route.name === 'Attendance') {
-      return <Attendance navigator={navigator} empData={this.state.employeeStatusData} checkAttendanceList={this.checkAttendanceList.bind(this)} />
+      return <Attendance
+                navigator={navigator}
+                empData={this.state.employeeStatusData}
+                checkAttendanceList={this.checkAttendanceList.bind(this)}
+              />
     }
   }
 

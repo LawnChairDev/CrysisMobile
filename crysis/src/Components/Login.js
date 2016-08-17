@@ -9,7 +9,7 @@ import {
   TextInput
 } from 'react-native';
 
-import { sendLoginCredentials } from '../helpers/helperAPI';
+import { sendLoginCredentials, getEmergencyStatus } from '../helpers/helperAPI';
 import red from '../red.png';
 
 class Login extends Component {
@@ -28,17 +28,32 @@ onSubmitLoginCredentials(){
 		username: this.state.usernameTextbox,
 		password: this.state.passwordTextbox
 	})
-	.then(function(){
-		console.log('Credentials Approved');
-		self.props.changeAuthState();
-		self.props.navigator.push({
-			name: 'Home'
-		})
-	})
-	.catch(function(error){
+  .then(function(){
+    console.log('Credentials Approved');
+    self.props.changeAuthState();
+    return getEmergencyStatus()
+  })
+  .then(function(response){
+    console.log('getEmergencyStatus response - ', response);
+    return response.json(); 
+  })
+  .then(function(data){
+    if (data.emergencyStatus === true) {
+      console.log("emergencyStatus is true");
+      self.props.changeEmergencyState();
+      self.props.navigator.push({
+        name: 'CheckIn'
+      })
+    } else {
+      self.props.navigator.push({
+        name: 'Home'
+      })
+    }
+  })
+  .catch(function(error){
     self.setState({errorMessage: 'Incorrect Login'})
     console.log('Error Approving Credentials - ', error);
-	})
+  })
 }
 
   render() {
