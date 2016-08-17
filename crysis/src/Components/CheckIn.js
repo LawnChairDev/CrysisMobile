@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { sendUserStatus } from '../helpers/helperAPI';
+import { debounce } from 'throttle-debounce';
 import red from '../red.png';
 
 class CheckIn extends Component {
@@ -81,10 +82,6 @@ class CheckIn extends Component {
 	}
 
 	render() {
-		// let helpMessageStyle;
-		// if (this.state.needHelp) {
-
-		// }
 		return (
 			<Image style={styles.container} source={red}>
 				<View style={styles.title}>
@@ -92,7 +89,7 @@ class CheckIn extends Component {
 				</View>
 				<View style={styles.buttons}>
 					<TouchableHighlight
-						onPress={this.navigateSafe.bind(this)}
+						onPress={debounce(1000, this.navigateSafe.bind(this))}
 						style={styles.safe}>
 						<Text style={styles.text}>SAFE</Text>
 					</TouchableHighlight>
