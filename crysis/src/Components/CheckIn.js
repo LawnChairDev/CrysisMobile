@@ -21,17 +21,17 @@ class CheckIn extends Component {
 
 	navigateSafe() {
 		var self = this;
-		sendUserStatus('safe')
-			.then(function(){
-				console.log("pushed the I'm safe button");
-				self.hideHelpMessage();
-				self.props.navigator.push({
-					name: 'Attendance'
-				})
-			})
-			.catch(function(err){
-				console.log("error inside of sendUserStatus", err);
-			})
+		self.props.navigator.push({
+			name: 'Attendance'
+		})
+		// sendUserStatus('safe')
+		// 	.then(function(){
+		// 		console.log("pushed the I'm safe button");
+		// 		self.hideHelpMessage(); 
+		// 	})
+		// 	.catch(function(err){
+		// 		console.log("error inside of sendUserStatus", err);
+		// 	})
 	}
 
 	navigateHelp() {
@@ -58,7 +58,7 @@ class CheckIn extends Component {
 	render() {
 		var helpFeedback;
 			if (this.state.needHelp) {
-				helpFeedback = styles.text;
+				helpFeedback = styles.helpFeedbackShow;
 			} else {
 				helpFeedback = styles.helpFeedbackHide
 			}
@@ -72,13 +72,13 @@ class CheckIn extends Component {
 					<TouchableHighlight
 						onPress={navigateSafe}
 						style={styles.safe}>
-						<Text style={styles.text}>SAFE</Text>
+						<Text style={styles.buttonText}>SAFE</Text>
 					</TouchableHighlight>
 
 					<TouchableHighlight
 						onPress={this.navigateHelp.bind(this)}
 						style={styles.help}>
-						<Text style={styles.text}>HELP</Text>
+						<Text style={styles.buttonText}>HELP</Text>
 					</TouchableHighlight>
 				</View>
 					<View>
@@ -137,13 +137,25 @@ const styles = StyleSheet.create({
       width: 0
     }
   },
-  text: {
+  buttonText: {
     color: '#fff',
     fontSize: 30,
     fontFamily: 'courier',
     fontWeight: 'bold',
 		alignSelf: 'center',
 		paddingTop: 35,
+  },
+  helpFeedbackShow: {
+		backgroundColor: 'gray',
+		alignSelf: 'center',
+		justifyContent: 'center',
+		padding: 10,
+		borderRadius: 5,
+		color: '#fff',
+    fontSize: 30,
+    fontFamily: 'courier',
+    fontWeight: 'bold',
+		alignSelf: 'center'
   },
   helpFeedbackHide: {
   	color: 'transparent',
