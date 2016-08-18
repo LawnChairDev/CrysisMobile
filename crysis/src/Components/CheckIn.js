@@ -17,7 +17,6 @@ class CheckIn extends Component {
 		this.state = {
 			needHelp: false
 		}
-
 	}
 
 	navigateSafe() {
@@ -41,53 +40,33 @@ class CheckIn extends Component {
 			.then(function(){
 				console.log("pushed the in danger button");
 				self.helpMessage();
-				// this.props.navigator.push({
-				// 	name: 'Attendance'
-				// })
 			})
-		}
+	}
 
 	hideHelpMessage() {
 		this.setState({needHelp: false}, function() {
-			console.log('Help Message OFF - ', 'false')
+			console.log('Help Message OFF - ')
 		})
 	}
 
 	helpMessage() {
 		this.setState({needHelp: true}, function() {
-			styles.helpFeedback = {
-				alignSelf: 'center',
-				justifyContent: 'flex-end',
-				backgroundColor: '#FE3C3C',
-				borderRadius: 5,
-				margin: 15,
-				shadowColor: "#000000",
-    		shadowOpacity: 0.8,
-    		shadowRadius: 2,
-    		shadowOffset: {
-      		height: 2,
-      		width: 0
-    		}
-			}
-			styles.helpFeedbackText = {
-				flex: 1,
-  			padding: 5,
-  			margin: 5,
-  			color: '#fff',
-  			justifyContent: 'center',
-  			fontFamily: 'courier',
-  			fontWeight: 'bold',
-  			fontSize: 30,
-			}
+			console.log('Help Message ON')
 		})
 	}
 
 	render() {
+		var helpFeedback;
+			if (this.state.needHelp) {
+				helpFeedback = styles.text;
+			} else {
+				helpFeedback = styles.helpFeedbackHide
+			}
 		let navigateSafe = _.debounce(this.navigateSafe.bind(this), 1000);
 		return (
 			<Image style={styles.container} source={red}>
-				<View style={styles.title}>
-					<Text style={styles.titleText}>Check In</Text>
+				<View>
+					<Text style={styles.title}>Check In</Text>
 				</View>
 				<View style={styles.buttons}>
 					<TouchableHighlight
@@ -102,8 +81,8 @@ class CheckIn extends Component {
 						<Text style={styles.text}>HELP</Text>
 					</TouchableHighlight>
 				</View>
-					<View style={styles.helpFeedback}>
-        		<Text style={styles.helpFeedbackText}>Help Alert Sent</Text>
+					<View>
+        		<Text style={helpFeedback}>Help Alert Sent</Text>
         	</View>
 			</Image>
 		)
@@ -119,9 +98,6 @@ const styles = StyleSheet.create({
     height: null
 	},
 	title: {
-
-	},
-	titleText: {
 		fontFamily: 'courier',
 		padding: 15,
 		color: '#fff',
@@ -132,9 +108,6 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignSelf: 'center',
 		justifyContent: 'center'
-	},
-	helpFeedback: {
-
 	},
 	help: {
 		width: 100,
@@ -172,8 +145,13 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		paddingTop: 35,
   },
-  helpFeedbackText: {
-  	color: 'transparent'
+  helpFeedbackHide: {
+  	color: 'transparent',
+    fontSize: 30,
+    fontFamily: 'courier',
+    fontWeight: 'bold',
+		alignSelf: 'center',
+		paddingTop: 35,
   }
 })
 
