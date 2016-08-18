@@ -21,17 +21,17 @@ class CheckIn extends Component {
 
 	navigateSafe() {
 		var self = this;
-		self.props.navigator.push({
-			name: 'Attendance'
-		})
-		// sendUserStatus('safe')
-		// 	.then(function(){
-		// 		console.log("pushed the I'm safe button");
-		// 		self.hideHelpMessage(); 
-		// 	})
-		// 	.catch(function(err){
-		// 		console.log("error inside of sendUserStatus", err);
-		// 	})
+		sendUserStatus('safe')
+			.then(function(){
+				console.log("pushed the I'm safe button");
+				self.hideHelpMessage();
+				self.props.navigator.push({
+					name: 'Attendance'
+				})
+			})
+			.catch(function(err){
+				console.log("error inside of sendUserStatus", err);
+			})
 	}
 
 	navigateHelp() {
@@ -162,8 +162,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: 'courier',
     fontWeight: 'bold',
-		alignSelf: 'center',
-		paddingTop: 35,
+		alignSelf: 'center'
   }
 })
 
