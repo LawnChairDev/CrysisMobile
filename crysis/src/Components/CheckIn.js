@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import { sendUserStatus } from '../helpers/helperAPI';
+import _ from 'lodash';
 import red from '../red.png';
 
 class CheckIn extends Component {
@@ -16,6 +17,7 @@ class CheckIn extends Component {
 		this.state = {
 			needHelp: false
 		}
+
 	}
 
 	navigateSafe() {
@@ -81,10 +83,7 @@ class CheckIn extends Component {
 	}
 
 	render() {
-		// let helpMessageStyle;
-		// if (this.state.needHelp) {
-
-		// }
+		let navigateSafe = _.debounce(this.navigateSafe.bind(this), 1000);
 		return (
 			<Image style={styles.container} source={red}>
 				<View style={styles.title}>
@@ -92,7 +91,7 @@ class CheckIn extends Component {
 				</View>
 				<View style={styles.buttons}>
 					<TouchableHighlight
-						onPress={this.navigateSafe.bind(this)}
+						onPress={navigateSafe}
 						style={styles.safe}>
 						<Text style={styles.text}>SAFE</Text>
 					</TouchableHighlight>
