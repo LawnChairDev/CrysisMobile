@@ -9,6 +9,7 @@ import {
   TextInput
 } from 'react-native';
 
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { sendLoginCredentials, getEmergencyStatus } from '../helpers/helperAPI';
 import red from '../red.png';
 
@@ -93,6 +94,7 @@ onSubmitLoginCredentials(){
               <Text style={styles.buttonText}>Login</Text>
             </TouchableHighlight>
           </View>
+          <KeyboardSpacer/>
         </ScrollView>
       </Image>
     )
