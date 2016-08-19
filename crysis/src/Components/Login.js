@@ -4,11 +4,12 @@ import {
 	Text,
   StyleSheet,
 	TouchableHighlight,
-  ScrollView,
   Image,
   TextInput
 } from 'react-native';
 
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import dismissKeyboard from 'react-native-dismiss-keyboard';
 import { sendLoginCredentials, getEmergencyStatus } from '../helpers/helperAPI';
 import red from '../red.png';
 
@@ -24,6 +25,7 @@ class Login extends Component {
 
 onSubmitLoginCredentials(){
 	var self = this;
+  dismissKeyboard();
 	sendLoginCredentials({
 		username: this.state.usernameTextbox,
 		password: this.state.passwordTextbox
@@ -59,11 +61,7 @@ onSubmitLoginCredentials(){
   render() {
     return (
       <Image style={styles.container} source={red}>
-        <ScrollView
-          style={styles.scrollView}
-          keyboardShouldPersistTaps={false}
-          scrollEnabled={false}
-        >
+        <View style={styles.scrollView}>
           <View style={styles.modal}>
             <Text style={styles.title}>Crysis</Text>
             <Text style={styles.errorMessage}>{ this.state.errorMessage }</Text>
@@ -93,7 +91,8 @@ onSubmitLoginCredentials(){
               <Text style={styles.buttonText}>Login</Text>
             </TouchableHighlight>
           </View>
-        </ScrollView>
+          <KeyboardSpacer />
+        </View>
       </Image>
     )
   }
