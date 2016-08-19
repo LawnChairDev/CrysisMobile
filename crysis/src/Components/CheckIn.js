@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { sendUserStatus } from '../helpers/helperAPI';
-import _ from 'lodash';
+import lowDebounce from 'lodash/debounce';
 import red from '../red.png';
 
 class CheckIn extends Component {
@@ -62,7 +62,7 @@ class CheckIn extends Component {
 			} else {
 				helpFeedback = styles.helpFeedbackHide
 			}
-		let navigateSafe = _.debounce(this.navigateSafe.bind(this), 1000);
+		let navigateSafe = lowDebounce(this.navigateSafe.bind(this), 1000);
 		return (
 			<Image style={styles.container} source={red}>
 				<View>

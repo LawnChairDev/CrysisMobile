@@ -10,7 +10,7 @@ import {
 
 import EmployeeEntry from './EmployeeEntry';
 import red from '../red.png';
-import _ from 'lodash'
+import lowMap from 'lodash/map'
 
 class Attendance extends Component {
 	constructor(props) {
@@ -22,7 +22,7 @@ class Attendance extends Component {
 	}
 
 	mapData() {
-		return _.map(this.props.empData, function(user, i) {
+		return lowMap(this.props.empData, function(user, i) {
 		 	return (
 	 			<EmployeeEntry
 					id={user.id}
