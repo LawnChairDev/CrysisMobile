@@ -9,8 +9,9 @@ import {
 } from 'react-native';
 
 import EmployeeEntry from './EmployeeEntry';
-import red from '../red.png';
 import lowMap from 'lodash/map'
+import red from '../assets/red.png';
+
 
 class Attendance extends Component {
 	constructor(props) {
