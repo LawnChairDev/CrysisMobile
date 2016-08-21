@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { sendLoginCredentials } from '../helpers/helperAPI';
-import red from '../red.png';
+import red from '../assets/red.png';
 
 class Login extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ onSubmitLoginCredentials(){
 
   render() {
     return (
-      <Image style={styles.container} source={red}>
+			<View style={styles.container}>
         <ScrollView
           style={styles.scrollView}
           keyboardShouldPersistTaps={false}
@@ -79,7 +79,7 @@ onSubmitLoginCredentials(){
             </TouchableHighlight>
           </View>
         </ScrollView>
-      </Image>
+      </View>
     )
   }
 }
@@ -90,13 +90,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     width: null,
-    height: null
+    height: null,
+		backgroundColor: 'rgba(110, 180, 120, 1)'
   },
   button: {
     justifyContent: 'center',
     height: 40,
     margin: 5,
-    backgroundColor: '#6C1111',
+    backgroundColor: '#555555',
   },
   buttonText: {
     alignSelf: 'center',
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: 'courier',
     borderWidth: 2,
-    borderColor: '#6C1111'
+    borderColor: '#555555'
   }
 });
 

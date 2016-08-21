@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import EmployeeEntry from './EmployeeEntry';
-import red from '../red.png';
+import red from '../assets/red.png';
 import _ from 'lodash'
 
 class Attendance extends Component {

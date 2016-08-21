@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import {
 	Text,
   Image,
-  StyleSheet
+  StyleSheet,
+	View
 } from 'react-native';
 
 import { getFromStorage } from '../helpers/helperLocalStorage';
 import { checkIfAuthenticated, getEmergencyStatus } from '../helpers/helperAPI'
-import red from '../red.png';
+import red from '../assets/red.png';
 
 class Loading extends Component {
 	constructor(props) {
@@ -56,9 +57,15 @@ class Loading extends Component {
 	}
 
 	render() {
-		return (
-			<Image style={styles.container} source={red}></Image>
-		)
+		if(this.props.inEmergency){
+			return (
+				<Image style={styles.container} source={red}></Image>
+			)
+		} else {
+			return (
+				<View style={[styles.container, {backgroundColor: 'rgba(110, 180, 120, 1)'}]}></View>
+			)
+		}
 	}
 }
 
