@@ -61,6 +61,7 @@ onSubmitLoginCredentials(){
   render() {
     return (
 			<View style={styles.container}>
+				<View style={styles.scrollView}>
           <View style={styles.modal}>
             <Text style={styles.title}>Crysis</Text>
             <Text style={styles.errorMessage}>{ this.state.errorMessage }</Text>
@@ -91,6 +92,7 @@ onSubmitLoginCredentials(){
             </TouchableHighlight>
           </View>
           <KeyboardSpacer />
+					</View>
         </View>
     )
   }
@@ -104,8 +106,11 @@ const styles = StyleSheet.create({
     width: null,
     height: null,
 		backgroundColor: 'rgba(110, 180, 120, 1)',
-		padding: 30
   },
+	scrollView: {
+		flex: 1,
+		padding: 30
+	},
   button: {
     justifyContent: 'center',
     height: 40,
