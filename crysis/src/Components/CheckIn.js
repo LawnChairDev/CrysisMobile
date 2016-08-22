@@ -9,7 +9,7 @@ import {
 
 import { sendUserStatus } from '../helpers/helperAPI';
 import lowDebounce from 'lodash/debounce';
-import red from '../red.png';
+import red from '../assets/red.png';
 
 class CheckIn extends Component {
 	constructor(props) {

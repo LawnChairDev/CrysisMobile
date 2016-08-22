@@ -11,7 +11,7 @@ import {
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import dismissKeyboard from 'react-native-dismiss-keyboard';
 import { sendLoginCredentials, getEmergencyStatus } from '../helpers/helperAPI';
-import red from '../red.png';
+import red from '../assets/red.png';
 
 class Login extends Component {
   constructor(props) {
@@ -37,7 +37,7 @@ onSubmitLoginCredentials(){
   })
   .then(function(response){
     console.log('getEmergencyStatus response - ', response);
-    return response.json(); 
+    return response.json();
   })
   .then(function(data){
     if (data.emergencyStatus === true) {
@@ -60,8 +60,8 @@ onSubmitLoginCredentials(){
 
   render() {
     return (
-      <Image style={styles.container} source={red}>
-        <View style={styles.scrollView}>
+			<View style={styles.container}>
+				<View style={styles.scrollView}>
           <View style={styles.modal}>
             <Text style={styles.title}>Crysis</Text>
             <Text style={styles.errorMessage}>{ this.state.errorMessage }</Text>
@@ -92,8 +92,8 @@ onSubmitLoginCredentials(){
             </TouchableHighlight>
           </View>
           <KeyboardSpacer />
+					</View>
         </View>
-      </Image>
     )
   }
 }
@@ -104,13 +104,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     width: null,
-    height: null
+    height: null,
+		backgroundColor: 'rgba(110, 180, 120, 1)',
   },
+	scrollView: {
+		flex: 1,
+		padding: 30
+	},
   button: {
     justifyContent: 'center',
     height: 40,
     margin: 5,
-    backgroundColor: '#6C1111',
+    backgroundColor: '#555555',
   },
   buttonText: {
     alignSelf: 'center',
@@ -154,7 +159,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontFamily: 'courier',
     borderWidth: 2,
-    borderColor: '#6C1111'
+    borderColor: '#555555'
   }
 });
 
