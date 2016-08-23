@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 import { registerPush } from './src/helpers/helperPushNotification';
-import { getFromStorage } from './src/helpers/helperLocalStorage';
 import { getStatusList, checkIfAuthenticated, getEmergencyStatus } from './src/helpers/helperAPI'
 
 import Loading from './src/Components/Loading';
@@ -69,46 +68,11 @@ class crysis extends Component {
   componentWillMount() {
     var self = this;
     registerPush();
-    // checkIfAuthenticated()
-    //   .then(function(){
-    //     console.log('this totally is running');
-    //     self.setState({isAuthenticated: true});
-    //     getStatusList()
-    //       .then(function(response) {
-    //         console.log('running inside of getStatusList on willMount');
-    //         return response.json()
-    //         // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
-    //       })
-    //       .then(function(data){
-    //         console.log("just JSON'ed in getStatusList", data);
-    //         self.setState({employeeStatusData: data});
-    //       })
-    //       .catch(function(err) {
-    //         console.log('Error Recieving Data - ', err);
-    //       })
-    //   })
-    //   .catch(function(){
-    //     console.log('error in retreiving jwt from storage');
-    //   })
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
-    console.log('this comp started up')
   }
 
   componentDidMount(){
     AppState.addEventListener('change', this.handleAppStateChange.bind(this));
-  }
-
-  render() {
-    Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
-    return (
-      <View style={styles.container}>
-        <Navigator
-          initialRoute={{name: 'Loading'}}
-          renderScene={this.handleRender.bind(this)}
-          configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
-        />
-      </View>
-    )
   }
 
   handleAppStateChange(appState){
@@ -117,24 +81,21 @@ class crysis extends Component {
     if(appState === "active"){
       getEmergencyStatus()
       .then(function(response){
-        console.log('getEmergencyStatus response - ', response);
         return response.json();
       })
       .then(function(data){
         if (data.emergencyStatus === true) {
-          console.log("emergencyStatus is true");
           self.onEmergencyAlert();
         }
       })
       .catch(function(error){
-        console.log('error in handleAppStateChange getting emergencyStatus', error);
+        console.error(error);
       })
     }
   }
 
   onNotification(notification) {
     var self = this;
-    console.log("a push notification was received");
     if(notification.getData().silent){
       this.checkAttendanceList();
       return;
@@ -154,21 +115,6 @@ class crysis extends Component {
 
   onAuthenticated() {
     this.setState({isAuthenticated: true});
-    // getStatusList()
-    //   .then(function(response) {
-    //     console.log('running inside of getStatusList on willMount');
-    //     return response.json()
-    //     // self.setState({employeeStatusData: JSON.parse(response._bodyInit)})
-    //   })
-    //   .then(function(data){
-    //     console.log("just JSON'ed in getStatusList", data);
-    //     self.setState({employeeStatusData: data}, function(){
-    //       console.log(self.state.employeeStatusData);
-    //     });
-    //   })
-    //   .catch(function(err) {
-    //     console.log('Error Recieving Data - ', err);
-    //   })
   }
 
   onEmergencyAlert(){
@@ -179,18 +125,27 @@ class crysis extends Component {
     var self = this;
     getStatusList()
       .then(function(response) {
-        console.log('running inside of getStatusList of checkAttendanceList');
         return response.json()
       })
       .then(function(data){
-        console.log("just JSON'ed in getStatusList", data);
-        self.setState({employeeStatusData: data}, function(){
-          console.log(self.state.employeeStatusData, "new state");
-        });
+        self.setState({employeeStatusData: data});
       })
       .catch(function(err) {
-        console.log('Error Recieving Data - ', err);
+        console.error('Error Recieving Data - ', err);
       })
+  }
+
+  render() {
+    Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
+    return (
+      <View style={styles.container}>
+      <Navigator
+      initialRoute={{name: 'Loading'}}
+      renderScene={this.handleRender.bind(this)}
+      configureScene={(route, routeStack) => Navigator.SceneConfigs.HorizontalSwipeJump}
+      />
+      </View>
+    )
   }
 }
 

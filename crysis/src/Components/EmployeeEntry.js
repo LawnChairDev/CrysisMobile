@@ -72,14 +72,12 @@ const styles = StyleSheet.create({
 	text: {
 		color: '#fff',
 		fontSize: 17,
-		// fontFamily: 'courier',
 		fontWeight: 'bold',
 		padding: 3
 	},
 	name: {
 		color: 'black',
 		fontSize: 17,
-		// fontFamily: 'courier',
 		fontWeight: 'bold',
 		padding: 3
 	}

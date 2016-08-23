@@ -5,7 +5,6 @@ import {
 	StyleSheet,
 	Animated,
 	Image,
-	TouchableHighlight,
 	TouchableWithoutFeedback
 } from 'react-native';
 
@@ -26,8 +25,6 @@ class Home extends Component {
 	}
 
 	componentWillReceiveProps(newProps) {
-		// console.log(this.props);
-		// console.log(newProps);
 		if(this.props.inEmergency === false && newProps.inEmergency === true){
 			console.log('we have determined that props inEmergency is true')
 			this.props.navigator.push({
@@ -36,17 +33,6 @@ class Home extends Component {
 		}
 	}
 
-	// componentWillUpdate(){
-	// 	console.log('componentWillUpdate called inside of Home Component')
-	// 	if(this.props.inEmergency){
-	// 		console.log('inEmergency is equal to: ', this.props.inEmergency);
-	// 		console.log('inEmergency is true about to push navigator into Check In');
-	// 		this.props.navigator.push({
-	// 			name: 'CheckIn'
-	// 		})
-	// 	}
-	// }
-
 	handlePressIn(){
 		var self = this;
 		this.setState({buttonPushed: true});
@@ -54,7 +40,6 @@ class Home extends Component {
 		var number = Math.ceil(combinedDuration/1000);
 		this.setState({ timeLeft: number});
 		this.id1 = setInterval(function(){
-			console.log(number);
 			if(number > 1){
 				number--;
 				self.setState({ timeLeft: number});
@@ -94,9 +79,9 @@ class Home extends Component {
 			} else {
 				return (
 					<View style={styles.countdownFrame}>
-					<Text>Hold for  <Text style={styles.boldLarge}>
-					{this.state.timeLeft}
-					</Text>  more seconds</Text>
+						<Text>Hold for  <Text style={styles.boldLarge}>
+						{this.state.timeLeft}
+						</Text>  more seconds</Text>
 					</View>
 				)
 			}
@@ -114,8 +99,7 @@ class Home extends Component {
 				})
 			})
 			.catch(function(err){
-				console.log('call to send emergencyAlert did not work')
-				console.log('here is the error', err)
+				console.error(err)
 			})
 	}
 
@@ -140,21 +124,21 @@ class Home extends Component {
 		return (
 			<View style={styles.container}>
         <Image source={red} style={styles.bgRed}>
-        <Animated.View style={[styles.bgOverlay, {backgroundColor: interpolatedColor}]}>
-        <View style={cautionShadow}></View>
-        <TouchableWithoutFeedback
-        onPressIn={this.handlePressIn.bind(this)}
-        onPressOut={this.handlePressOut.bind(this)}>
-        <View style={cautionButton}>
-        <Image source={catButton} style={styles.caution}>
-        <Text style={styles.buttonText}>ACTIVATE{"\n"}ALERT</Text>
-        </Image>
-        </View>
-        </TouchableWithoutFeedback>
-        <View style={styles.countdown}>
-          {this.showText()}
-        </View>
-        </Animated.View>
+	        <Animated.View style={[styles.bgOverlay, {backgroundColor: interpolatedColor}]}>
+		        <View style={cautionShadow}></View>
+		        <TouchableWithoutFeedback
+		        onPressIn={this.handlePressIn.bind(this)}
+		        onPressOut={this.handlePressOut.bind(this)}>
+			        <View style={cautionButton}>
+				        <Image source={catButton} style={styles.caution}>
+					        <Text style={styles.buttonText}>ACTIVATE{"\n"}ALERT</Text>
+				        </Image>
+			        </View>
+		        </TouchableWithoutFeedback>
+		        <View style={styles.countdown}>
+		          {this.showText()}
+		        </View>
+	        </Animated.View>
         </Image>
       </View>
 		)
@@ -231,53 +215,5 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 });
-
-
-// const styles = StyleSheet.create({
-// 	container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     width: null,
-//     height: null
-//   },
-// 	button: {
-// 		height: 160,
-// 		width: 300,
-// 		backgroundColor: "#6C1111",
-//     shadowColor: "#000000",
-//     shadowOpacity: 0.8,
-//     shadowRadius: 2,
-//     shadowOffset: {
-//       height: 2,
-//       width: 0
-//     }
-// 	},
-//   buttonText: {
-//   	justifyContent: 'center',
-//   	fontSize: 80,
-// 		textAlign: 'center',
-//   	fontFamily: 'courier',
-// 		borderRadius: 10,
-//   	paddingTop: 40,
-//   	paddingBottom: 40,
-// 		backgroundColor: '#CE0536',
-// 		shadowColor: "#000000",
-//     shadowOpacity: 0.8,
-//     shadowRadius: 2,
-//     shadowOffset: {
-//       height: 2,
-//       width: 0
-//     }
-//   },
-//   counter: {
-//   	color: 'white',
-//   	backgroundColor: 'transparent',
-//   	alignSelf: 'center',
-//   	fontSize: 20,
-//   	marginTop: 30,
-//   	fontFamily: 'courier'
-//   }
-// });
 
 export default Home;
