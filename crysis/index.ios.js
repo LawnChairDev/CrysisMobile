@@ -4,6 +4,7 @@ import {
   Navigator,
   StyleSheet,
   PushNotificationIOS,
+  AppState,
   AlertIOS,
   Text,
   View
@@ -25,7 +26,7 @@ class crysis extends Component {
     this.state = {
       isAuthenticated: false,
       employeeStatusData: null,
-      inEmergency: false
+      inEmergency: false,
     }
   }
 
@@ -93,6 +94,10 @@ class crysis extends Component {
     console.log('this comp started up')
   }
 
+  componentDidMount(){
+    AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+  }
+
   render() {
     Navigator.SceneConfigs.HorizontalSwipeJump.gestures = {}
     return (
@@ -104,6 +109,27 @@ class crysis extends Component {
         />
       </View>
     )
+  }
+
+  handleAppStateChange(appState){
+    var self = this;
+    PushNotificationIOS.setApplicationIconBadgeNumber(0)
+    if(appState === "active"){
+      getEmergencyStatus()
+      .then(function(response){
+        console.log('getEmergencyStatus response - ', response);
+        return response.json();
+      })
+      .then(function(data){
+        if (data.emergencyStatus === true) {
+          console.log("emergencyStatus is true");
+          self.onEmergencyAlert();
+        }
+      })
+      .catch(function(error){
+        console.log('error in handleAppStateChange getting emergencyStatus', error);
+      })
+    }
   }
 
   onNotification(notification) {
