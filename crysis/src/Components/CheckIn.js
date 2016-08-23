@@ -23,14 +23,13 @@ class CheckIn extends Component {
 		var self = this;
 		sendUserStatus('safe')
 			.then(function(){
-				console.log("pushed the I'm safe button");
 				self.hideHelpMessage();
 				self.props.navigator.push({
 					name: 'Attendance'
 				})
 			})
 			.catch(function(err){
-				console.log("error inside of sendUserStatus", err);
+				console.error("error inside of sendUserStatus", err);
 			})
 	}
 
@@ -38,20 +37,17 @@ class CheckIn extends Component {
 		var self = this;
 		sendUserStatus('inDanger')
 			.then(function(){
-				console.log("pushed the in danger button");
 				self.helpMessage();
 			})
 	}
 
 	hideHelpMessage() {
 		this.setState({needHelp: false}, function() {
-			console.log('Help Message OFF - ')
 		})
 	}
 
 	helpMessage() {
 		this.setState({needHelp: true}, function() {
-			console.log('Help Message ON')
 		})
 	}
 
