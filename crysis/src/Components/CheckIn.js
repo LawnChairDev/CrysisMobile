@@ -21,8 +21,10 @@ class CheckIn extends Component {
 
 	navigateSafe() {
 		var self = this;
+		console.log("safe button pushed");
 		sendUserStatus('safe')
 			.then(function(){
+				console.log("inside of .then of sendUserStatus for safe")
 				self.hideHelpMessage();
 				self.props.navigator.push({
 					name: 'Attendance'
@@ -35,8 +37,10 @@ class CheckIn extends Component {
 
 	navigateHelp() {
 		var self = this;
+		console.log("help button pushed");
 		sendUserStatus('inDanger')
 			.then(function(){
+				console.log("inside of .then of sendUserStatus for inDanger");
 				self.helpMessage();
 			})
 	}

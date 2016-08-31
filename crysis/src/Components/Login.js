@@ -27,18 +27,21 @@ onSubmitLoginCredentials(){
 	var self = this;
   dismissKeyboard();
 	sendLoginCredentials({
-		username: this.state.usernameTextbox,
-		password: this.state.passwordTextbox
+		userName: this.state.usernameTextbox,
+		userPassword: this.state.passwordTextbox
 	})
   .then(function(){
+		console.log("inside first then of sendLoginCredentials");
     self.props.changeAuthState();
     return getEmergencyStatus()
   })
   .then(function(response){
+		console.log("inside second then of sendLoginCredentials");
     return response.json();
   })
   .then(function(data){
-    if (data.emergencyStatus === true) {
+		console.log("inside third then of sendLoginCredentials");
+    if (data.inEmergency === true) {
       self.props.changeEmergencyState();
       self.props.navigator.push({
         name: 'CheckIn'
@@ -51,7 +54,7 @@ onSubmitLoginCredentials(){
   })
   .catch(function(error){
     self.setState({errorMessage: 'Incorrect Login'})
-    console.error('Error Approving Credentials - ', error);
+    console.log('Error Approving Credentials - ', error);
   })
 }
 

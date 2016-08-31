@@ -26,9 +26,9 @@ class Attendance extends Component {
 		return lowMap(this.props.empData, function(user, i) {
 		 	return (
 	 			<EmployeeEntry
-					id={user.id}
+					id={user._id}
 					key={i}
-					name={user.name}
+					name={user.name.first + " " + user.name.last}
 					status={user.status}
 					wardenName={user.wardenName}
 				/>
