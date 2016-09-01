@@ -69,33 +69,40 @@ class crysis extends Component {
     var self = this;
     registerPush();
     PushNotificationIOS.addEventListener('notification', this.onNotification.bind(this));
+    console.log("finished running componentWillMount");
   }
 
   componentDidMount(){
+    console.log("in componentDidMount");
     AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+    console.log("finished running componentDidMount");
   }
 
   handleAppStateChange(appState){
     var self = this;
     PushNotificationIOS.setApplicationIconBadgeNumber(0)
     if(appState === "active"){
-      getEmergencyStatus()
-      .then(function(response){
-        return response.json();
-      })
-      .then(function(data){
-        if (data.emergencyStatus === true) {
-          self.onEmergencyAlert();
-        }
-      })
-      .catch(function(error){
-        console.error(error);
-      })
+      console.log("in appStat change to active");
+      if(this.state.isAuthenticated){
+        getEmergencyStatus()
+        .then(function(response){
+          return response.json();
+        })
+        .then(function(data){
+          if (data.emergencyStatus === true) {
+            self.onEmergencyAlert();
+          }
+        })
+        .catch(function(error){
+          console.error(error);
+        })
+      }
     }
   }
 
   onNotification(notification) {
     var self = this;
+    console.log("a push notification was received");
     if(notification.getData().silent){
       this.checkAttendanceList();
       return;
@@ -123,14 +130,19 @@ class crysis extends Component {
 
   checkAttendanceList() {
     var self = this;
+    console.log("inside of checkAttendanceList");
     getStatusList()
       .then(function(response) {
+        console.log("inside of .then for getStatusList in index.ios.js")
         return response.json()
       })
       .then(function(data){
+        console.log('This is my data after jsoning', data);
+        console.log('type of data', Array.isArray(data));
         self.setState({employeeStatusData: data});
       })
       .catch(function(err) {
+        console.log("HEY I'm an error");
         console.error('Error Recieving Data - ', err);
       })
   }

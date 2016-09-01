@@ -19,13 +19,16 @@ class Loading extends Component {
 		checkIfAuthenticated()
 			.then(function(jwt){
 				if(jwt){
+					console.log("inside componentDidMount after checking for jwt in loading");
 					self.props.changeAuthState();
 					getEmergencyStatus()
 						.then(function(response){
+							console.log("inside then of getEmergencyStatus");
 							return response.json();
 						})
 						.then(function(data){
-							if(data.emergencyStatus === true){
+							console.log("inside 2nd then of getEmergencyStatus");
+							if(data.inEmergency === true){
 								self.props.changeEmergencyState();
 								self.props.navigator.push({
 									name: 'CheckIn'

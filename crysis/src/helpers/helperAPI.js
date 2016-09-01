@@ -21,7 +21,7 @@ export function checkIfAuthenticated(){
 }
 
 export function sendEmergencyAlert(){
-  var url = buildUrl(rootUrl, '/api/alert')
+  var url = buildUrl(rootUrl, '/api/mobile/emergencyStatus');
   var config = {
     method: "PUT",
     headers: {
@@ -32,7 +32,8 @@ export function sendEmergencyAlert(){
 }
 
 export function sendUserStatus(userStatus){
-  var url = buildUrl(rootUrl, '/api/statusUpdate')
+  console.log('inside of sendUserStatus');
+  var url = buildUrl(rootUrl, '/api/mobile/employeeStatus');
   var config = {
     method: "PUT",
     headers: {
@@ -48,7 +49,8 @@ export function sendUserStatus(userStatus){
 }
 
 export function getStatusList(){
-  var url = buildUrl(rootUrl, '/api/statusUpdate');
+  console.log('inside of getStatusList');
+  var url = buildUrl(rootUrl, '/api/mobile/employeeStatus');
   var config = {
     method: "GET",
     headers: {
@@ -59,7 +61,7 @@ export function getStatusList(){
 }
 
 export function sendDeviceToken(deviceToken){
-  var url = buildUrl(rootUrl, '/api/deviceToken');
+  var url = buildUrl(rootUrl, '/api/mobile/deviceToken');
   var config = {
     method: "PUT",
     headers: {
@@ -75,7 +77,8 @@ export function sendDeviceToken(deviceToken){
 }
 
 export function getEmergencyStatus(){
-  var url = buildUrl(rootUrl, '/api/alert');
+  console.log("getEmergencyStatus called")
+  var url = buildUrl(rootUrl, '/api/mobile/emergencyStatus');
   var config = {
     method: "GET",
     headers: {
@@ -86,10 +89,13 @@ export function getEmergencyStatus(){
 }
 
 export function sendLoginCredentials(loginObj){
+  console.log('inside beginning of sendLoginCredentials');
   return AsyncStorage.getItem('deviceToken')
   .then(function(dvcToken){
+    console.log('inside then of API sendLoginCredentials');
     loginObj.deviceToken = dvcToken;
-    var url = buildUrl(rootUrl, '/api/mobileLogin');
+    console.log("loginOBj", loginObj);
+    var url = buildUrl(rootUrl, '/api/mobile/login');
     var config = {
       method: "POST",
       headers: {
@@ -101,9 +107,13 @@ export function sendLoginCredentials(loginObj){
     return fetch(url, config)
   })
   .then(function(response){
+    console.log("inside then of fetch call for sendLoginCredentials");
+    console.log("response in 1st then fetch call", response)
     return response.json()
   })
   .then(function(data){
+    console.log("inside 2nd then of fetch call for sendLoginCredentials");
+    console.log("data in 2nd then of fetch call for sendLoginCredentials", data);
     if(data.token){
       jwt = data.token;
       return AsyncStorage.setItem('jwtToken', data.token)
